@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#000000">
+<title>Elitte Produções — Sistema Comercial</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#000;--gold:#CCA44F;--cream:#E9E7DB;
+  --s1:#0e0e0e;--s2:#181818;--s3:#212121;--s4:#2c2c2c;
+  --gb:rgba(204,164,79,.15);--gb2:rgba(204,164,79,.32);--gb3:rgba(204,164,79,.55);
+  --t1:#E9E7DB;--t2:#8a8070;--t3:#3e3428;
+  --green:#1D9E75;--gbg:rgba(29,158,117,.1);--gbd:rgba(29,158,117,.3);
+  --amber:#D4900A;--abg:rgba(212,144,10,.09);--abd:rgba(212,144,10,.3);
+  --red:#C94040;--rbg:rgba(201,64,64,.1);--rbd:rgba(201,64,64,.3);
+  --blue:#3A7BCC;--bbg:rgba(58,123,204,.08);--bbd:rgba(58,123,204,.28);
+  --rad:12px;
+}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{background:var(--black);color:var(--t1);font-family:'Roboto',sans-serif;font-size:15px;min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button,input,select,textarea{font-family:inherit;-webkit-tap-highlight-color:transparent}
+
+/* ── HEADER EXPANDIDO ── */
+header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(0,0,0,.98);
+  border-bottom:1px solid var(--gb);
+  height:auto;min-height:72px;
+  padding:14px max(24px,env(safe-area-inset-left)) 14px max(24px,env(safe-area-inset-right));
+  padding-left:max(24px,env(safe-area-inset-left));
+  padding-right:max(24px,env(safe-area-inset-right));
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+}
+.header-left{display:flex;flex-direction:column;gap:4px}
+.logo-svg{height:30px;width:auto;display:block}
+.header-sys{font-size:10px;font-weight:400;color:var(--t3);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+.header-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.header-mode{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);opacity:.7}
+.btn-novo{
+  padding:8px 16px;border-radius:6px;border:1px solid var(--rbd);
+  background:transparent;color:#E07070;font-size:11px;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;cursor:pointer;
+  touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+  transition:background .15s;white-space:nowrap;
+}
+.btn-novo:active{background:var(--rbg)}
+@media(max-width:480px){.header-mode{display:none}.header-sys{display:none}}
+
+/* ── MODE SWITCHER ── */
+.mode-switch{display:flex;gap:0;margin-bottom:28px;border:1px solid var(--gb2);border-radius:var(--rad);overflow:hidden;background:var(--s2)}
+.mode-btn{
+  flex:1;padding:14px 16px;border-radius:0;border:none;
+  background:transparent;color:var(--t2);font-size:12px;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;
+  cursor:pointer;text-align:center;transition:all .2s;
+  touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+  border-right:1px solid var(--gb2);
+}
+.mode-btn:last-child{border-right:none}
+.mode-btn.active{background:rgba(204,164,79,.1);color:var(--gold)}
+.mode-btn small{display:block;font-size:10px;font-weight:400;opacity:.6;letter-spacing:0;text-transform:none;margin-top:2px}
+
+/* ── MAIN ── */
+main{max-width:880px;margin:0 auto;padding:0 max(24px,env(safe-area-inset-left)) 120px}
+
+/* ── SECTION HEAD ── */
+.sh{display:flex;align-items:center;gap:10px;margin:28px 0 12px}
+.sh-n{font-size:11px;font-weight:700;color:var(--gold);letter-spacing:.1em;flex-shrink:0}
+.sh-t{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--t2)}
+.sh::after{content:'';flex:1;height:1px;background:var(--gb)}
+
+/* ── TEXT INPUT BOX ── */
+.tbox{
+  background:var(--s2);border:1px solid var(--gb2);border-radius:var(--rad);
+  padding:12px 16px;display:flex;align-items:center;gap:12px;margin-bottom:8px;
+}
+.tbox.gold-border{border-color:var(--gb3)}
+.tbox label{font-size:11px;font-weight:600;color:var(--t2);white-space:nowrap;flex-shrink:0;min-width:80px}
+.tbox input[type=text],.tbox input[type=tel],.tbox input[type=email],.tbox input[type=date]{
+  background:transparent;border:none;border-bottom:1px solid var(--gb2);
+  outline:none;color:var(--t1);font-size:16px;font-weight:400;
+  flex:1;padding:3px 2px;min-width:0;border-radius:0;-webkit-appearance:none;
+}
+.tbox input.gold{color:var(--gold);font-weight:500}
+.tbox input::placeholder{color:var(--t3)}
+
+/* ── SELECT ── */
+.tbox select{
+  background:var(--s3);border:1px solid var(--gb2);border-radius:6px;
+  color:var(--t1);font-size:15px;font-family:inherit;
+  flex:1;padding:6px 10px;outline:none;-webkit-appearance:none;appearance:none;
+  min-width:0;
+}
+
+/* ── SEGMENTED CONTROL ── */
+.seg{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.seg-btn{
+  padding:8px 14px;border-radius:20px;border:1px solid var(--gb2);
+  background:var(--s2);color:var(--t2);font-size:12px;font-weight:500;
+  cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+  transition:all .18s;
+}
+.seg-btn.active{border-color:var(--gold);background:rgba(204,164,79,.12);color:var(--gold)}
+
+/* ── COLLAPSIBLE EXTRA FIELDS ── */
+.extra-toggle{
+  display:flex;align-items:center;gap:8px;
+  padding:10px 16px;background:var(--s3);border:1px solid var(--gb);
+  border-radius:8px;cursor:pointer;margin-bottom:8px;
+  font-size:11px;color:var(--t2);font-weight:500;
+  touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+}
+.extra-toggle::before{content:'＋';color:var(--gold);font-size:14px;transition:transform .2s}
+.extra-toggle.open::before{transform:rotate(45deg)}
+.extra-wrap{overflow:hidden;max-height:0;transition:max-height .4s ease}
+.extra-wrap.open{max-height:1000px}
+
+/* ── VALIDITY SELECTOR ── */
+.validity-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 16px;background:var(--s2);border:1px solid var(--gb);border-radius:var(--rad);margin-bottom:8px}
+.validity-label{font-size:11px;color:var(--t2);font-weight:500;flex-shrink:0}
+.val-opts{display:flex;gap:6px;flex-wrap:wrap}
+.val-opt{
+  padding:6px 12px;border-radius:16px;border:1px solid var(--gb2);
+  background:var(--s3);color:var(--t2);font-size:11px;font-weight:500;
+  cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;transition:all .18s;
+}
+.val-opt.active{border-color:var(--gold);background:rgba(204,164,79,.12);color:var(--gold)}
+
+/* ── ALERT INLINE ── */
+.alert-inline{
+  display:none;border-radius:8px;padding:9px 14px;margin-top:6px;
+  font-size:11px;line-height:1.55;border:1px solid transparent;
+}
+.alert-inline.show{display:block}
+.alert-warn{background:var(--abg);border-color:var(--abd);color:#c4880a}
+.alert-danger{background:var(--rbg);border-color:var(--rbd);color:#c94040}
+.alert-tip{background:rgba(29,158,117,.08);border-color:rgba(29,158,117,.25);color:#1a7a5a}
+
+/* ── STEPPER CARD ── */
+.grid{display:grid;gap:8px}
+.fcard{background:var(--s2);border:1px solid var(--gb);border-radius:var(--rad);padding:14px 16px 10px}
+.fcard.hl{border-color:var(--gb3);background:rgba(204,164,79,.055)}
+.fcard-header{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:10px}
+.fcard-lbl{font-size:11px;font-weight:500;color:var(--t2);line-height:1.45;flex:1}
+.fcard-val{font-size:1rem;font-weight:500;color:var(--cream);flex-shrink:0;text-align:right}
+.fcard.hl .fcard-val{color:var(--gold)}
+.stepper{display:flex;align-items:stretch;background:var(--s3);border:1px solid var(--gb2);border-radius:8px;overflow:hidden;height:48px}
+.st-btn{
+  width:52px;min-width:52px;height:48px;background:var(--s4);border:none;
+  color:var(--gold);font-size:24px;font-weight:300;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  -webkit-tap-highlight-color:transparent;user-select:none;touch-action:manipulation;
+  flex-shrink:0;transition:background .1s;
+}
+.st-btn:first-child{border-right:1px solid var(--gb2)}
+.st-btn:last-child{border-left:1px solid var(--gb2)}
+.st-btn.pressed,.st-btn:active{background:rgba(204,164,79,.25)}
+.st-input{
+  flex:1;min-width:0;background:transparent;border:none;
+  color:var(--gold);text-align:center;font-size:16px;font-weight:600;
+  font-family:'Roboto',sans-serif;outline:none;padding:0 4px;
+  -webkit-appearance:none;appearance:none;
+}
+.st-input::-webkit-outer-spin-button,.st-input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.st-input[type=number]{-moz-appearance:textfield}
+.st-suffix{font-size:11px;color:var(--t3);display:flex;align-items:center;padding-right:10px;flex-shrink:0}
+
+/* ── TOGGLE ── */
+.toggle-row{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  background:var(--s2);border:1px solid var(--gb2);border-radius:var(--rad);
+  padding:14px 18px;cursor:pointer;margin-bottom:8px;
+  -webkit-tap-highlight-color:transparent;user-select:none;touch-action:manipulation;
+}
+.tg-txt .tg-main{font-size:13px;font-weight:500;color:var(--t1)}
+.tg-txt .tg-sub{font-size:10px;color:var(--t2);margin-top:3px;line-height:1.4}
+.tg-pill{width:52px;height:28px;border-radius:14px;background:var(--s4);border:1px solid var(--gb2);position:relative;flex-shrink:0;transition:background .25s,border-color .25s;pointer-events:none}
+.tg-pill::after{content:'';position:absolute;top:4px;left:4px;width:20px;height:20px;border-radius:50%;background:var(--t2);transition:transform .25s,background .25s}
+.tg-pill.on{background:rgba(204,164,79,.22);border-color:var(--gold)}
+.tg-pill.on::after{transform:translateX(24px);background:var(--gold)}
+.collapse{overflow:hidden;max-height:0;transition:max-height .4s ease}
+.collapse.open{max-height:5000px}
+.ibox{font-size:11px;color:var(--t2);line-height:1.6;background:var(--bbg);border:1px solid var(--bbd);border-radius:8px;padding:10px 14px;margin-bottom:8px}
+.ibox b{color:#85B7EB}
+
+/* ── METRICS ── */
+.mg4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:8px}
+.mg3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:8px}
+.mg2{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:8px}
+@media(max-width:600px){.mg4{grid-template-columns:1fr 1fr}.mg3{grid-template-columns:1fr 1fr}.mg3>:last-child:nth-child(odd){grid-column:span 2}}
+@media(max-width:340px){.mg4,.mg3,.mg2{grid-template-columns:1fr}}
+.metric{border-radius:10px;padding:12px 14px;border:1px solid transparent}
+.mlbl{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--t3);margin-bottom:6px}
+.mval{font-size:clamp(.88rem,2.4vw,1.15rem);font-weight:500;line-height:1.1}
+.msub{font-size:10px;color:var(--t3);margin-top:4px}
+.m-gold{background:rgba(204,164,79,.12);border-color:rgba(204,164,79,.28)}.m-gold .mval{color:var(--gold)}.m-gold .mlbl{color:rgba(204,164,79,.4)}
+.m-cream{background:rgba(233,231,219,.05);border-color:rgba(233,231,219,.1)}.m-cream .mval{color:var(--cream)}
+.m-amber{background:var(--abg);border-color:var(--abd)}.m-amber .mval{color:#D4900A}.m-amber .mlbl{color:rgba(212,144,10,.4)}
+.m-green{background:var(--gbg);border-color:var(--gbd)}.m-green .mval{color:#5DCAA5}.m-green .mlbl{color:rgba(29,158,117,.4)}
+.m-red{background:var(--rbg);border-color:var(--rbd)}.m-red .mval{color:#E07070}.m-red .mlbl{color:rgba(201,64,64,.4)}
+.m-blue{background:var(--bbg);border-color:var(--bbd)}.m-blue .mval{color:#85B7EB}.m-blue .mlbl{color:rgba(58,123,204,.4)}
+
+/* ── DEMONSTRATIVO ── */
+.demo{background:var(--s2);border:1px solid var(--gb2);border-radius:var(--rad);overflow:hidden;margin-bottom:8px}
+.demo-head{padding:8px 16px;background:rgba(204,164,79,.08);border-bottom:1px solid var(--gb);font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.demo-row{display:flex;justify-content:space-between;align-items:baseline;padding:7px 16px;border-bottom:1px solid rgba(255,255,255,.03);font-size:12px}
+.demo-row .dl{color:var(--t2)}.demo-row .dr{font-weight:500;color:var(--cream)}
+.demo-row.hi{background:rgba(204,164,79,.07)}.demo-row.hi .dl{color:var(--gold);font-weight:700}.demo-row.hi .dr{color:var(--gold)}
+.demo-row.neg .dr{color:#E07070}
+.demo-tot{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:rgba(204,164,79,.08);border-top:1px solid var(--gb)}
+.demo-tot .dl{font-weight:700;font-size:13px;color:var(--gold)}.demo-tot .dr{font-weight:700;font-size:18px}
+
+/* ── BARS ── */
+.bars{display:grid;gap:8px}
+.brow{display:flex;align-items:center;gap:10px}
+.blbl{font-size:11px;color:var(--t2);min-width:148px;flex-shrink:0}
+.btrack{flex:1;background:var(--s3);border-radius:4px;height:24px;overflow:hidden;min-width:0}
+.bfill{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:8px;font-size:9px;font-weight:700;color:rgba(0,0,0,.7);transition:width .5s cubic-bezier(.4,0,.2,1)}
+.bamt{font-size:11px;font-weight:500;color:var(--t2);min-width:76px;text-align:right;flex-shrink:0}
+@media(max-width:480px){.blbl{min-width:100px;font-size:10px}.bamt{min-width:60px;font-size:10px}}
+
+/* ── VERDICT ── */
+hr{border:none;border-top:1px solid var(--gb);margin:24px 0}
+.verdict{border-radius:var(--rad);padding:16px 20px;border:1px solid transparent;font-size:13px;line-height:1.75;margin-top:14px}
+.verdict-title{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}
+.v-green{background:rgba(29,158,117,.1);border-color:rgba(29,158,117,.3);color:#5DCAA5}.v-green .verdict-title{color:#1D9E75}
+.v-amber{background:rgba(212,144,10,.09);border-color:rgba(212,144,10,.3);color:#D4900A}.v-amber .verdict-title{color:#a07010}
+.v-red{background:rgba(201,64,64,.1);border-color:rgba(201,64,64,.3);color:#E07070}.v-red .verdict-title{color:#C94040}
+
+/* ── ABADGE ── */
+.abadge{display:flex;align-items:center;gap:12px;background:var(--s2);border:1px solid var(--gb);border-radius:10px;padding:11px 16px;margin-bottom:12px}
+.abadge .abn{font-size:1.05rem;font-weight:700;color:var(--gold);margin-top:2px}
+.abadge .abl{font-size:10px;color:var(--t3);letter-spacing:.1em;text-transform:uppercase}
+
+/* ── PL IMPACT ── */
+.pl-impact{border-radius:10px;padding:12px 16px;font-size:12px;line-height:1.65;border:1px solid transparent;margin-top:8px;display:none}
+
+/* ── MÚLTIPLOS SHOWS ── */
+.artist-list{display:grid;gap:10px;margin-bottom:10px}
+.artist-row{
+  background:var(--s2);border:1px solid var(--gb2);border-radius:var(--rad);
+  padding:14px 16px;
+}
+.artist-row-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.artist-num{font-size:10px;font-weight:700;color:var(--gold);letter-spacing:.1em;flex-shrink:0}
+.artist-row-name input{
+  background:transparent;border:none;border-bottom:1px solid var(--gb2);
+  outline:none;color:var(--t1);font-size:16px;font-weight:500;
+  width:100%;padding:3px 2px;border-radius:0;-webkit-appearance:none;
+}
+.artist-row-name input::placeholder{color:var(--t3)}
+.remove-btn{
+  width:32px;height:32px;border-radius:50%;border:1px solid var(--rbd);
+  background:var(--rbg);color:#E07070;font-size:18px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+}
+.artist-values{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.artist-val-field{display:flex;flex-direction:column;gap:4px}
+.artist-val-label{font-size:10px;color:var(--t3);font-weight:500;letter-spacing:.06em;text-transform:uppercase}
+.artist-val-input{
+  background:var(--s3);border:1px solid var(--gb2);border-radius:8px;
+  color:var(--gold);font-size:16px;font-weight:600;font-family:inherit;
+  padding:10px 12px;outline:none;-webkit-appearance:none;appearance:none;
+  width:100%;text-align:right;
+}
+.artist-val-input::-webkit-outer-spin-button,.artist-val-input::-webkit-inner-spin-button{-webkit-appearance:none}
+.artist-val-input[type=number]{-moz-appearance:textfield}
+
+/* Datas disponíveis por artista */
+.dates-section{margin-top:10px}
+.dates-label{font-size:10px;color:var(--t3);font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.date-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap}
+.date-input{
+  background:var(--s3);border:1px solid var(--gb2);border-radius:8px;
+  color:var(--t1);font-size:15px;font-family:inherit;padding:8px 12px;
+  outline:none;-webkit-appearance:none;flex:1;min-width:120px;
+}
+.date-val-input{
+  background:var(--s3);border:1px solid var(--gb2);border-radius:8px;
+  color:var(--gold);font-size:15px;font-weight:600;font-family:inherit;
+  padding:8px 12px;outline:none;-webkit-appearance:none;appearance:none;
+  width:130px;text-align:right;flex-shrink:0;
+}
+.date-val-input::-webkit-outer-spin-button,.date-val-input::-webkit-inner-spin-button{-webkit-appearance:none}
+.date-val-input[type=number]{-moz-appearance:textfield}
+.date-badge{
+  font-size:10px;font-weight:700;padding:4px 8px;border-radius:12px;
+  flex-shrink:0;letter-spacing:.04em;
+}
+.date-badge.fds{background:rgba(204,164,79,.2);color:var(--gold);border:1px solid var(--gb2)}
+.date-badge.sem{background:rgba(233,231,219,.07);color:var(--t2);border:1px solid var(--gb)}
+.remove-date-btn{
+  width:28px;height:28px;border-radius:50%;border:1px solid var(--rbd);
+  background:var(--rbg);color:#E07070;font-size:16px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+}
+.add-date-btn{
+  font-size:11px;color:var(--gold);background:rgba(204,164,79,.08);
+  border:1px dashed var(--gb2);border-radius:8px;padding:8px 14px;
+  cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+  margin-top:4px;width:100%;text-align:center;
+}
+
+.add-artist-btn{
+  width:100%;padding:14px;border-radius:var(--rad);
+  border:1.5px dashed var(--gb2);background:transparent;
+  color:var(--gold);font-size:13px;font-weight:500;
+  cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+  transition:background .2s;
+}
+.add-artist-btn:active{background:rgba(204,164,79,.08)}
+
+/* ── ACTION BUTTONS ── */
+.action-group{display:grid;gap:10px;margin-top:20px}
+.action-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:400px){.action-row{grid-template-columns:1fr}}
+.action-btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:15px 16px;border-radius:var(--rad);cursor:pointer;
+  font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+  border:1.5px solid;transition:all .2s;line-height:1.2;text-align:center;
+}
+.btn-internal{color:var(--gold);border-color:var(--gb2);background:rgba(204,164,79,.08)}
+.btn-internal:active{background:rgba(204,164,79,.2)}
+.btn-proposal{color:var(--cream);border-color:rgba(233,231,219,.25);background:rgba(233,231,219,.07)}
+.btn-proposal:active{background:rgba(233,231,219,.15)}
+.btn-whatsapp{color:#25D366;border-color:rgba(37,211,102,.3);background:rgba(37,211,102,.07);grid-column:span 2}
+.btn-whatsapp:active{background:rgba(37,211,102,.15)}
+.btn-clear{color:#E07070;border-color:var(--rbd);background:var(--rbg)}
+.btn-clear:active{background:rgba(201,64,64,.2)}
+.btn-catalog{color:#85B7EB;border-color:var(--bbd);background:var(--bbg);grid-column:span 2}
+.btn-catalog:active{background:rgba(58,123,204,.15)}
+
+/* ── STICKY SUMMARY BAR ── */
+.summary-bar{
+  position:fixed;bottom:0;left:0;right:0;z-index:200;
+  background:rgba(14,14,14,.97);
+  border-top:1px solid var(--gb2);
+  padding:10px max(16px,env(safe-area-inset-left));
+  padding-bottom:max(10px,env(safe-area-inset-bottom));
+  display:flex;align-items:center;justify-content:space-around;flex-wrap:wrap;gap:6px;
+}
+.sb-item{display:flex;flex-direction:column;align-items:center;gap:2px}
+.sb-label{font-size:9px;color:var(--t3);letter-spacing:.08em;text-transform:uppercase}
+.sb-val{font-size:14px;font-weight:700;color:var(--gold)}
+.sb-val.green{color:#5DCAA5}
+.sb-val.red{color:#E07070}
+.sb-val.amber{color:#D4900A}
+
+/* ── FOOTER ── */
+footer{max-width:880px;margin:0 auto;padding:16px max(20px,env(safe-area-inset-left)) 40px;border-top:1px solid var(--gb);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px}
+footer p{font-size:10px;color:var(--t3);letter-spacing:.05em}
+.gt{color:var(--gold)}
+
+/* ── PRINT ── */
+@media print{header,footer,.summary-bar,.action-group,.mode-switch{display:none!important}body{background:#fff!important;color:#000!important}main{padding:0!important;max-width:100%!important}.fcard,.metric,.demo,.verdict{break-inside:avoid}}
+</style>
+</head>
+<body>
+
+<!-- HEADER EXPANDIDO -->
+<header>
+  <div class="header-left">
+    <svg class="logo-svg" viewBox="0 0 195 50" xmlns="http://www.w3.org/2000/svg" aria-label="Elitte Produções">
+      <text x="0" y="38" font-family="'Nunito','Roboto',Arial,sans-serif" font-weight="800" font-size="40" fill="#E9E7DB" letter-spacing="-0.5">elitte</text>
+      <path d="M163,2 C163,2 160.5,10 154,12 C160.5,14 163,22 163,22 C163,22 165.5,14 172,12 C165.5,10 163,2 163,2 Z" fill="#B8892A"/>
+      <text x="4" y="48" font-family="'Roboto',Arial,sans-serif" font-weight="600" font-size="8.5" fill="#B8892A" letter-spacing="4">PRODUÇÕES</text>
+    </svg>
+    <span class="header-sys">Sistema Comercial · 2026</span>
+  </div>
+  <div class="header-right">
+    <span class="header-mode" id="header-mode-label">Single Show</span>
+    <button class="btn-novo" onclick="novoShow()">Novo Show</button>
+  </div>
+</header>
+
+<main>
+
+<!-- SELETOR DE MODO -->
+<div style="max-width:880px;margin:0 auto;padding:20px max(24px,env(safe-area-inset-left)) 0">
+  <div class="mode-switch">
+    <button class="mode-btn active" id="btn-single" onclick="setMode('single')">
+      Single Show<small>Proposta detalhada</small>
+    </button>
+    <button class="mode-btn" id="btn-multi" onclick="setMode('multi')">
+      Múltiplos Shows<small>Catálogo de artistas</small>
+    </button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SEÇÃO COMUM: VENDEDOR + IDENTIFICAÇÃO DO SHOW
+══════════════════════════════════════════════ -->
+
+<!-- VENDEDOR -->
+<div class="sh"><span class="sh-n">✦</span><span class="sh-t">Vendedor Responsável</span></div>
+<div class="tbox gold-border">
+  <label for="vendedor">Vendedor</label>
+  <input type="text" id="vendedor" class="gold" placeholder="Nome do vendedor responsável..." maxlength="60" autocomplete="off" autocorrect="off" spellcheck="false">
+</div>
+
+<!-- IDENTIFICAÇÃO DO SHOW -->
+<div class="sh"><span class="sh-n">✦</span><span class="sh-t">Identificação do Show</span></div>
+
+<div class="tbox">
+  <label for="nomeEvento">Evento</label>
+  <input type="text" id="nomeEvento" placeholder="Ex: Festa Junina Municipal 2026" maxlength="80" autocomplete="off">
+</div>
+
+<div class="tbox">
+  <label for="dataEvento">Data(s)</label>
+  <input type="text" id="dataEvento" placeholder="Ex: 28/06/2026 ou 08 a 11/07/2026" maxlength="40" autocomplete="off">
+</div>
+
+<div class="tbox">
+  <label for="cidade">Cidade</label>
+  <input type="text" id="cidade" placeholder="Cidade — UF" maxlength="60" autocomplete="off">
+</div>
+
+<!-- Tipo de contratante -->
+<div class="sh" style="margin-top:12px;margin-bottom:8px"><span class="sh-n" style="font-size:9px">TIPO</span><span class="sh-t">Tipo de Contratante</span></div>
+<div class="seg" id="seg-tipo">
+  <button class="seg-btn active" data-val="Prefeitura" onclick="setSeg('seg-tipo',this)">🏛️ Prefeitura</button>
+  <button class="seg-btn" data-val="Casa de Show" onclick="setSeg('seg-tipo',this)">🎪 Casa de Show</button>
+  <button class="seg-btn" data-val="Corporativo" onclick="setSeg('seg-tipo',this)">🏢 Corporativo</button>
+</div>
+
+<!-- Dados do contratante -->
+<div class="tbox" style="margin-top:8px">
+  <label for="nomeContratante">Contratante</label>
+  <input type="text" id="nomeContratante" placeholder="Nome completo" maxlength="60" autocomplete="off">
+</div>
+
+<!-- Cargo/Função -->
+<div class="sh" style="margin-top:12px;margin-bottom:8px"><span class="sh-n" style="font-size:9px">CARGO</span><span class="sh-t">Cargo / Função</span></div>
+<div class="seg" id="seg-cargo">
+  <button class="seg-btn active" data-val="Prefeito" onclick="setSeg('seg-cargo',this)">Prefeito</button>
+  <button class="seg-btn" data-val="Secretário" onclick="setSeg('seg-cargo',this)">Secretário</button>
+  <button class="seg-btn" data-val="Vereador" onclick="setSeg('seg-cargo',this)">Vereador</button>
+  <button class="seg-btn" data-val="Parceiro Comercial" onclick="setSeg('seg-cargo',this)">Parceiro</button>
+  <button class="seg-btn" data-val="Produtor" onclick="setSeg('seg-cargo',this)">Produtor</button>
+  <button class="seg-btn" data-val="Diretor" onclick="setSeg('seg-cargo',this)">Diretor</button>
+  <button class="seg-btn" data-val="Outro" onclick="setSeg('seg-cargo',this)">Outro</button>
+</div>
+
+<div class="tbox" style="margin-top:8px">
+  <label for="telefone">Telefone</label>
+  <input type="tel" id="telefone" placeholder="(xx) xxxxx-xxxx" maxlength="20" inputmode="tel">
+</div>
+
+<!-- Campos extras (ocultos por padrão) -->
+<div class="extra-toggle" id="extra-toggle" onclick="toggleExtra()">Dados adicionais do contratante (email, aniversário, observações)</div>
+<div class="extra-wrap" id="extra-wrap">
+  <div class="tbox">
+    <label for="email">Email</label>
+    <input type="email" id="email" placeholder="email@contratante.com.br" inputmode="email" autocomplete="off">
+  </div>
+  <div class="tbox">
+    <label for="aniversario">Aniversário</label>
+    <input type="text" id="aniversario" placeholder="DD/MM" maxlength="10" inputmode="numeric">
+  </div>
+  <div class="tbox" style="align-items:flex-start">
+    <label for="obs" style="padding-top:4px">Obs.</label>
+    <textarea id="obs" placeholder="Observações internas sobre este contratante ou show..." rows="2" style="background:transparent;border:none;border-bottom:1px solid var(--gb2);outline:none;color:var(--t1);font-size:16px;resize:none;flex:1;min-width:0;padding:3px 2px;border-radius:0;font-family:inherit;-webkit-appearance:none"></textarea>
+  </div>
+</div>
+
+<!-- VALIDADE -->
+<div class="validity-row" style="margin-top:8px">
+  <span class="validity-label">Validade da Proposta</span>
+  <div class="val-opts" id="val-opts">
+    <button class="val-opt active" data-days="0" onclick="setValidity(this)">Sem prazo</button>
+    <button class="val-opt" data-days="5" onclick="setValidity(this)">5 dias</button>
+    <button class="val-opt" data-days="10" onclick="setValidity(this)">10 dias</button>
+    <button class="val-opt" data-days="15" onclick="setValidity(this)">15 dias</button>
+    <button class="val-opt" data-days="20" onclick="setValidity(this)">20 dias</button>
+    <button class="val-opt" data-days="30" onclick="setValidity(this)">30 dias</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     MODO SINGLE SHOW
+══════════════════════════════════════════════ -->
+<div id="mode-single">
+
+  <!-- ✦ ARTISTA -->
+  <div class="sh"><span class="sh-n">✦</span><span class="sh-t">Artista</span></div>
+  <div class="tbox gold-border">
+    <label for="artista">Artista</label>
+    <input type="text" id="artista" class="gold" placeholder="Nome do artista..." maxlength="60" autocomplete="off" autocorrect="off" spellcheck="false">
+  </div>
+
+  <!-- 01 VALOR DO CONTRATO -->
+  <div class="sh"><span class="sh-n">01</span><span class="sh-t">Valor do Contrato</span></div>
+  <div class="grid">
+    <div class="fcard" data-id="contrato" data-min="0" data-max="2000000" data-step="1000" data-type="brl">
+      <div class="fcard-header"><span class="fcard-lbl">Valor do Contrato</span><span class="fcard-val" id="lv-contrato">R$ 0</span></div>
+      <div class="stepper"><button class="st-btn" data-dir="-1">−</button><input type="number" class="st-input" id="contrato" value="0" min="0" max="2000000" step="1000" inputmode="numeric"><span class="st-suffix">R$</span><button class="st-btn" data-dir="1">+</button></div>
+    </div>
+    <div class="fcard" data-id="artistico" data-min="0" data-max="2000000" data-step="1000" data-type="brl">
+      <div class="fcard-header"><span class="fcard-lbl">Valor Artístico</span><span class="fcard-val" id="lv-artistico">R$ 0</span></div>
+      <div class="stepper"><button class="st-btn" data-dir="-1">−</button><input type="number" class="st-input" id="artistico" value="0" min="0" max="2000000" step="1000" inputmode="numeric"><span class="st-suffix">R$</span><button class="st-btn" data-dir="1">+</button></div>
+    </div>
+    <div class="fcard" data-id="prodOp" data-min="0" data-max="1000000" data-step="500" data-type="brl">
+      <div class="fcard-header"><span class="fcard-lbl">Produção Operacional</span><span class="fcard-val" id="lv-prodOp">R$ 0</span></div>
+      <div class="stepper"><button class="st-btn" data-dir="-1">−</button><input type="number" class="st-input" id="prodOp" value="0" min="0" max="1000000" step="500" inputmode="numeric"><span class="st-suffix">R$</span><button class="st-btn" data-dir="1">+</button></div>
+    </div>
+    <div class="fcard" data-id="impArt" data-min="0" data-max="50" data-step="0.01" data-type="pct">
+      <div class="fcard-header"><span class="fcard-lbl">Imposto Artístico a Deduzir (%)</span><span class="fcard-val" id="lv-impArt">0%</span></div>
+      <div class="stepper"><button class="st-btn" data-dir="-1">−</button><input type="number" class="st-input" id="impArt" value="0" min="0" max="50" step="0.01" inputmode="decimal"><span class="st-suffix">%</span><button class="st-btn" data-dir="1">+</button></div>
+    </div>
+    <div class="fcard" data-id="impOp" data-min="0" data-max="50" data-step="0.01" data-type="pct">
+      <div class="fcard-header"><span class="fcard-lbl">Imposto Operacional a Deduzir (%)</span><span class="fcard-val" id="lv-impOp">0%</span></div>
+      <div class="stepper"><button class="st-btn" data-dir="-1">−</button><input type="number" class="st-input" id="impOp" value="0" min="0" max="50" step="0.01" inputmode="decimal"><span class="st-suffix">%</span><button class="st-btn" data-dir="1">+</button></div>
+    </div>
+  </div>
+
+  <!-- Resultado Op. Líquido -->
+  <div style="background:rgba(29,158,117,.08);border:1px solid rgba(29,158,117,.25);border-radius:10px;padding:12px 16px;margin-top:8px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+    <span style="font-size:11px;color:rgba(29,158,117,.7);font-weight:500">Operacional Líquido (após imp. art. + op.)</span>
+    <div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap">
+      <span style="font-size:1rem;font-weight:700;color:#5DCAA5" id="rv-opLiq">R$ 0</span>
+      <span style="font-size:10px;color:var(--t3)" id="rv-opLiq-detail">dedução: R$ 0</span>
+    </div>
+  </div>
+
+  <div class="grid" style="margin-top:8px">
+    <div class="fcard" data-id="repasse" data-min="0" data-max="1000000" data-step="500" data-type="brl">
+      <div class="fcard-header"><span class="fcard-lbl">Repasse Operacional</span><span class="fcard-val" id="lv-repasse">R$ 0</span></div>
+      <div class="stepper"><button class="st-btn" data-dir="-1">−</button><input type="number" class="st-input" id="repasse" value="0" min="0" max="1000000" step="500" inputmode="numeric"><span class="st-suffix">R$</span><button class="st-btn" data-dir="1">+</button></div>
+    </div>
+    <div class="fcard" data-id="plOrc" data-min="0" data-max="1000000" data-step="500" data-type="brl">
+      <div class="fcard-header"><span class="fcard-lbl">Produção Local (orçamento)</span><span class="fcard-val" id="lv-plOrc">R$ 0</span></div>
+      <div class="stepper"><button class="st-btn" data-dir="-1">−</button><input type="number" class="st-input" id="plOrc" value="0" min="0" max="1000000" step="500" inputmode="numeric"><span class="st-suffix">R$</span><button class="st-btn" data-dir="1">+</button></div>
+    </div>
+  </div>
+
+  <div class="mg4" style="margin-top:10px">
+    <div class="metric m-gold"><div class="mlbl">Valor do Contrato</div><div class="mval" id="r-contrato">R$ 0</div></div>
+    <div class="metric m-cream"><div class="mlbl">Valor Artístico</div><div class="mval" id="r-artBruto">R$ 0</div><div class="msub">valor bruto</div></div>
+    <div class="metric m-cream"><div class="mlbl">Repasse + PL</div><div class="mval" id="r-opLiq">R$ 0</div></div>
+    <div class="metric m-cream" id="r-saldo-op-card"><div class="mlbl">Op. Líq. − (Rep.+PL)</div><div class="mval" id="r-saldo-op">R$ 0</div><div class="msub" id="r-saldo-op-s">—</div></div>
+  </div>
+
+  <!-- 02 CACHÊ SHOW -->
+  <div class="sh"><span class="sh-n">02</span><span class="sh-t">Cachê Show</span></div>
+  <div class="grid">
+    <div class="fcard" data-id="cache" data-min="0" data-max="2000000" data-step="1000" data-type="brl">
+      <div class="fcard-header"><span class="fcard-lbl">Cachê do Artista</span><span class="fcard-val" id="lv-cache">R$ 0</span></div>
+      <div class="stepper"><button class="st-btn" data-dir="-1">−</button><input type="number" class="st-input" id="cache" value="0" min="0" max="2000000" step="1000" inputmode="numeric"><span class="st-suffix">R$</span><button class="st-btn" data-dir="1">+</button></div>
+    </div>
+    <div class="fcard" data-id="pctEl" data-min="0" data-max="50" data-step="0.01" data-type="pct">
+      <div class="fcard-header"><span class="fcard-lbl">Comissão Elitte — sobre Valor Artístico (%)</span><span class="fcard-val" id="lv-pctEl">0%</span></div>
+      <div class="stepper"><button class="st-btn" data-dir="-1">−</button><input type="number" class="st-input" id="pctEl" value="0" min="0" max="50" step="0.01" inputmode="decimal"><span class="st-suffix">%</span><button class="st-btn" data-dir="1">+</button></div>
+    </div>
+    <div class="fcard" data-id="impCom" data-min="0" data-max="50" data-step="0.01" data-type="pct">
+      <div class="fcard-header"><span class="fcard-lbl">Imposto NF para Recebimento da Comissão (%)</span><span class="fcard-val" id="lv-impCom">0%</span></div>
+      <div class="stepper"><button class="st-btn" data-dir="-1">−</button><input type="number" class="st-input" id="impCom" value="0" min="0" max="50" step="0.01" inputmode="decimal"><span class="st-suffix">%</span><button class="st-btn" data-dir="1">+</button></div>
+    </div>
+    <div class="fcard hl" data-id="pctVend" data-min="0" data-max="50" data-step="0.01" data-type="pct">
+      <div class="fcard-header"><span class="fcard-lbl">Comissão Vendedor (% sobre comissão líquida)</span><span class="fcard-val" id="lv-pctVend">0%</span></div>
+      <div class="stepper"><button class="st-btn" data-dir="-1">−</button><input type="number" class="st-input" id="pctVend" value="0" min="0" max="50" step="0.01" inputmode="decimal"><span class="st-suffix">%</span><button class="st-btn" data-dir="1">+</button></div>
+    </div>
+  </div>
+
+  <!-- Alerta comissão baixa -->
+  <div class="alert-inline alert-warn" id="alert-com-baixa">
+    ⚠ <b>Comissão abaixo do recomendado.</b> Considere negociar pelo menos 10% para garantir uma margem saudável para a Elitte.
+  </div>
+
+  <div class="mg3" style="margin-top:10px">
+    <div class="metric m-gold"><div class="mlbl">Comissão Bruta Elitte</div><div class="mval" id="r-comBruta">R$ 0</div><div class="msub" id="r-comBruta-s">% s/ Val. Art.</div></div>
+    <div class="metric m-amber"><div class="mlbl">Imposto NF Comissão</div><div class="mval" id="r-impCom">R$ 0</div><div class="msub" id="r-impCom-s">—</div></div>
+    <div class="metric m-gold"><div class="mlbl">Comissão Líquida Elitte ⭑</div><div class="mval" id="r-comLiq">R$ 0</div><div class="msub">base de cálculo</div></div>
+  </div>
+  <div class="mg2">
+    <div class="metric m-blue"><div class="mlbl">Comissão Vendedor</div><div class="mval" id="r-vendVal">R$ 0</div><div class="msub" id="r-vendVal-s">—</div></div>
+    <div class="metric m-green"><div class="mlbl">Comissão Elitte após Vendedor</div><div class="mval" id="r-elitteAposVend">R$ 0</div><div class="msub">antes das despesas</div></div>
+  </div>
+
+  <!-- 03 PRODUÇÃO LOCAL -->
+  <div class="sh"><span class="sh-n">03</span><span class="sh-t">Produção Local</span></div>
+  <div class="toggle-row" onclick="togglePL()">
+    <div class="tg-txt"><div class="tg-main">Ativar Produção Local</div><div class="tg-sub">Custeio embutido na NF — responsabilidade Elitte ou Prefeitura</div></div>
+    <div style="display:flex;align-items:center;gap:8px"><span style="font-size:11px;color:var(--t2)" id="pl-toggle-label">Inativa</span><div class="tg-pill" id="tg-pill-pl"></div></div>
+  </div>
+  <div class="collapse" id="pl-wrap">
+    <div class="ibox"><b>Produção Local ativa.</b> Se o gasto superar o orçamento, a diferença é deduzida da comissão Elitte. Se sobrar, soma à comissão.</div>
+    <div class="grid">
+      <div class="fcard" data-id="plCam" data-min="0" data-max="100000" data-step="50" data-type="brl"><div class="fcard-header"><span class="fcard-lbl">Produção de Camarim</span><span class="fcard-val" id="lv-plCam">R$ 0</span></div><div class="stepper"><button class="st-btn" data-dir="-1">−</button><input type="number" class="st-input" id="plCam" value="0" min="0" max="100000" step="50" inputmode="numeric"><span class="st-suffix">R$</span><button class="st-btn" data-dir="1">+</button></div></div>
+      <div class="fcard" data-id="plAb" data-min="0" data-max="100000" data-step="50" data-type="brl"><div class="fcard-header"><span class="fcard-lbl">Abastecimento de Camarim</span><span class="fcard-val" id="lv-plAb">R$ 0</span></div><div class="stepper"><button class="st-btn" data-dir="-1">−</button><input type="number" class="st-input" id="plAb" value="0" min="0" max="100000" step="50" inputmode="numeric"><span class="st-suffix">R$</span><button class="st-btn" data-dir="1">+</button></div></div>
+      <div class="fcard" data-id="plLoc" data-min="0" data-max="100000" data-step="50" data-type="brl"><div class="fcard-header"><span class="fcard-lbl">Locações para Montagem de Camarim</span><span class="fcard-val" id="lv-plLoc">R$ 0</span></div><div class="stepper"><button class="st-btn" data-dir="-1">−</button><input type="number" class="st-input" id="plLoc" value="0" min="0" max="100000" step="50" inputmode="numeric"><span class="st-suffix">R$</span><button class="st-btn" data-dir="1">+</button></div></div>
+      <div class="fcard" data-id="plTr" data-min="0" data-max="50000" data-step="50" data-type="brl"><div class="fcard-header"><span class="fcard-lbl">Translado Local</span><span class="fcard-val" id="lv-plTr">R$ 0</span></div><div class="stepper"><button class="st-btn" data-dir="-1">−</button><input type="number" class="st-input" id="plTr" value="0" min="0" max="50000" step="50" inputmode="numeric"><span class="st-suffix">R$</span><button class="st-btn" data-dir="1">+</button></div></div>
+      <div class="fcard" data-id="plCar" data-min="0" data-max="50000" data-step="50" data-type="brl"><div class="fcard-header"><span class="fcard-lbl">Carregadores</span><span class="fcard-val" id="lv-plCar">R$ 0</span></div><div class="stepper"><button class="st-btn" data-dir="-1">−</button><input type="number" class="st-input" id="plCar" value="0" min="0" max="50000" step="50" inputmode="numeric"><span class="st-suffix">R$</span><button class="st-btn" data-dir="1">+</button></div></div>
+      <div class="fcard" data-id="plHosp" data-min="0" data-max="100000" data-step="50" data-type="brl"><div class="fcard-header"><span class="fcard-lbl">Hospedagem</span><span class="fcard-val" id="lv-plHosp">R$ 0</span></div><div class="stepper"><button class="st-btn" data-dir="-1">−</button><input type="number" class="st-input" id="plHosp" value="0" min="0" max="100000" step="50" inputmode="numeric"><span class="st-suffix">R$</span><button class="st-btn" data-dir="1">+</button></div></div>
+      <div class="fcard" data-id="plAlim" data-min="0" data-max="50000" data-step="50" data-type="brl"><div class="fcard-header"><span class="fcard-lbl">Alimentação</span><span class="fcard-val" id="lv-plAlim">R$ 0</span></div><div class="stepper"><button class="st-btn" data-dir="-1">−</button><input type="number" class="st-input" id="plAlim" value="0" min="0" max="50000" step="50" inputmode="numeric"><span class="st-suffix">R$</span><button class="st-btn" data-dir="1">+</button></div></div>
+      <div class="fcard" data-id="plLed" data-min="0" data-max="200000" data-step="50" data-type="brl"><div class="fcard-header"><span class="fcard-lbl">Painel de Led</span><span class="fcard-val" id="lv-plLed">R$ 0</span></div><div class="stepper"><button class="st-btn" data-dir="-1">−</button><input type="number" class="st-input" id="plLed" value="0" min="0" max="200000" step="50" inputmode="numeric"><span class="st-suffix">R$</span><button class="st-btn" data-dir="1">+</button></div></div>
+      <div class="fcard" data-id="plBack" data-min="0" data-max="100000" data-step="50" data-type="brl"><div class="fcard-header"><span class="fcard-lbl">Itens para BackLine</span><span class="fcard-val" id="lv-plBack">R$ 0</span></div><div class="stepper"><button class="st-btn" data-dir="-1">−</button><input type="number" class="st-input" id="plBack" value="0" min="0" max="100000" step="50" inputmode="numeric"><span class="st-suffix">R$</span><button class="st-btn" data-dir="1">+</button></div></div>
+    </div>
+    <div class="mg3" style="margin-top:12px">
+      <div class="metric m-gold"><div class="mlbl">01 · Valor Destinado</div><div class="mval" id="pl-r-orc">R$ 0</div><div class="msub">orçamento aba 01</div></div>
+      <div class="metric m-amber"><div class="mlbl">02 · Total Gasto</div><div class="mval" id="pl-r-gasto">R$ 0</div></div>
+      <div class="metric m-cream" id="pl-r-saldo-card"><div class="mlbl">03 · Saldo</div><div class="mval" id="pl-r-saldo">R$ 0</div><div class="msub" id="pl-r-saldo-s">—</div></div>
+    </div>
+    <div class="pl-impact" id="pl-impacto-box"></div>
+  </div>
+
+  <!-- 04 DESPESAS INTERNAS -->
+  <div class="sh"><span class="sh-n">04</span><span class="sh-t">Despesas Internas Elitte</span></div>
+  <div class="grid">
+    <div class="fcard" data-id="h" data-min="1" data-max="200" data-step="1" data-type="hours-qty">
+      <div class="fcard-header"><span class="fcard-lbl">Horas Operacionais Trabalhadas</span><span class="fcard-val" id="lv-h">1h</span></div>
+      <div class="stepper"><button class="st-btn" data-dir="-1">−</button><input type="number" class="st-input" id="h" value="1" min="1" max="200" step="1" inputmode="numeric"><span class="st-suffix">h</span><button class="st-btn" data-dir="1">+</button></div>
+    </div>
+    <div class="fcard" data-id="valorHora" data-min="0" data-max="10000" data-step="50" data-type="brl">
+      <div class="fcard-header"><span class="fcard-lbl">Valor por Hora — custo operacional do escritório</span><span class="fcard-val" id="lv-valorHora">R$ 250</span></div>
+      <div class="stepper"><button class="st-btn" data-dir="-1">−</button><input type="number" class="st-input" id="valorHora" value="0" min="0" max="10000" step="50" inputmode="numeric"><span class="st-suffix">R$/h</span><button class="st-btn" data-dir="1">+</button></div>
+    </div>
+    <div class="fcard" data-id="visita" data-min="0" data-max="30000" data-step="50" data-type="brl"><div class="fcard-header"><span class="fcard-lbl">Gastos para Visitação</span><span class="fcard-val" id="lv-visita">R$ 0</span></div><div class="stepper"><button class="st-btn" data-dir="-1">−</button><input type="number" class="st-input" id="visita" value="0" min="0" max="30000" step="50" inputmode="numeric"><span class="st-suffix">R$</span><button class="st-btn" data-dir="1">+</button></div></div>
+    <div class="fcard" data-id="brindes" data-min="0" data-max="30000" data-step="50" data-type="brl"><div class="fcard-header"><span class="fcard-lbl">Brindes</span><span class="fcard-val" id="lv-brindes">R$ 0</span></div><div class="stepper"><button class="st-btn" data-dir="-1">−</button><input type="number" class="st-input" id="brindes" value="0" min="0" max="30000" step="50" inputmode="numeric"><span class="st-suffix">R$</span><button class="st-btn" data-dir="1">+</button></div></div>
+    <div class="fcard" data-id="prod" data-min="0" data-max="30000" data-step="50" data-type="brl"><div class="fcard-header"><span class="fcard-lbl">Produtor Artístico</span><span class="fcard-val" id="lv-prod">R$ 0</span></div><div class="stepper"><button class="st-btn" data-dir="-1">−</button><input type="number" class="st-input" id="prod" value="0" min="0" max="30000" step="50" inputmode="numeric"><span class="st-suffix">R$</span><button class="st-btn" data-dir="1">+</button></div></div>
+    <div class="fcard" data-id="film" data-min="0" data-max="5000" data-step="10" data-type="brl"><div class="fcard-header"><span class="fcard-lbl">Filmmaker</span><span class="fcard-val" id="lv-film">R$ 0</span></div><div class="stepper"><button class="st-btn" data-dir="-1">−</button><input type="number" class="st-input" id="film" value="0" min="0" max="5000" step="10" inputmode="numeric"><span class="st-suffix">R$</span><button class="st-btn" data-dir="1">+</button></div></div>
+    <div class="fcard" data-id="foto" data-min="0" data-max="5000" data-step="10" data-type="brl"><div class="fcard-header"><span class="fcard-lbl">Fotógrafo</span><span class="fcard-val" id="lv-foto">R$ 0</span></div><div class="stepper"><button class="st-btn" data-dir="-1">−</button><input type="number" class="st-input" id="foto" value="0" min="0" max="5000" step="10" inputmode="numeric"><span class="st-suffix">R$</span><button class="st-btn" data-dir="1">+</button></div></div>
+    <div class="fcard" data-id="infl" data-min="0" data-max="5000" data-step="10" data-type="brl"><div class="fcard-header"><span class="fcard-lbl">Influenciador</span><span class="fcard-val" id="lv-infl">R$ 0</span></div><div class="stepper"><button class="st-btn" data-dir="-1">−</button><input type="number" class="st-input" id="infl" value="0" min="0" max="5000" step="10" inputmode="numeric"><span class="st-suffix">R$</span><button class="st-btn" data-dir="1">+</button></div></div>
+    <div class="fcard" data-id="mkt" data-min="0" data-max="5000" data-step="10" data-type="brl"><div class="fcard-header"><span class="fcard-lbl">Marketing</span><span class="fcard-val" id="lv-mkt">R$ 0</span></div><div class="stepper"><button class="st-btn" data-dir="-1">−</button><input type="number" class="st-input" id="mkt" value="0" min="0" max="5000" step="10" inputmode="numeric"><span class="st-suffix">R$</span><button class="st-btn" data-dir="1">+</button></div></div>
+  </div>
+
+  <!-- Alerta despesas altas -->
+  <div class="alert-inline alert-warn" id="alert-desp-alta">
+    ⚠ <b>Despesas elevadas.</b> Os custos internos estão consumindo mais de 50% da comissão líquida. Avalie se o negócio é viável nestas condições.
+  </div>
+
+  <!-- 05 RESULTADO FINAL -->
+  <hr>
+  <div class="sh"><span class="sh-n">05</span><span class="sh-t">Resultado Final — Elitte Produções</span></div>
+  <div id="abadge-wrap"></div>
+  <div class="mg4" id="res-top" style="margin-bottom:14px">
+    <div class="metric m-gold"><div class="mlbl">Comissão Líquida</div><div class="mval" id="rf-comLiq">R$ 0</div><div class="msub">base</div></div>
+    <div class="metric m-blue" id="rf-vend-card"><div class="mlbl">Comissão Vendedor</div><div class="mval" id="rf-vend">R$ 0</div></div>
+    <div class="metric m-amber" id="rf-di-card"><div class="mlbl">Despesas Internas</div><div class="mval" id="rf-di">R$ 0</div></div>
+    <div class="metric m-amber" id="rf-pl-card"><div class="mlbl">Gasto Prod. Local</div><div class="mval" id="rf-pl">R$ 0</div><div class="msub" id="rf-pl-s">inativo</div></div>
+  </div>
+  <div class="demo" id="demo-wrap"></div>
+  <div class="sh" style="margin-top:20px"><span class="sh-n"></span><span class="sh-t">Distribuição da Comissão</span></div>
+  <div class="bars" id="bars"></div>
+  <div class="mg2" style="margin-top:12px">
+    <div class="metric m-amber"><div class="mlbl">Total de Saídas</div><div class="mval" id="rf-saidas">R$ 0</div></div>
+    <div class="metric m-green" id="lucro-card"><div class="mlbl">Lucro Líquido — Elitte</div><div class="mval" id="rf-lucro">R$ 0</div><div class="msub" id="rf-lucro-s">—</div></div>
+  </div>
+  <div class="verdict v-amber" id="verdict">
+    <div class="verdict-title" id="vt-title">AGUARDANDO DADOS</div>
+    <div id="vt-body">Preencha o Valor Artístico e a % de comissão para ver a análise.</div>
+  </div>
+
+  <!-- BOTÕES SINGLE -->
+  <div class="action-group">
+    <div class="action-row">
+      <button class="action-btn btn-internal" onclick="gerarRelatorioInterno()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+        Relatório Interno
+      </button>
+      <button class="action-btn btn-proposal" onclick="gerarProposta()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+        Proposta Elitte
+      </button>
+    </div>
+    <button class="action-btn btn-whatsapp" onclick="enviarWhatsApp('single')">
+      Enviar via WhatsApp
+    </button>
+  </div>
+</div><!-- /mode-single -->
+
+<!-- ══════════════════════════════════════════════
+     MODO MÚLTIPLOS SHOWS
+══════════════════════════════════════════════ -->
+<div id="mode-multi" style="display:none">
+
+  <div class="sh"><span class="sh-n">✦</span><span class="sh-t">Lista de Artistas</span></div>
+  <div class="ibox" style="margin-bottom:12px">
+    Adicione os artistas com seus valores e datas disponíveis. Sexta e sábado são destacados automaticamente com indicador visual.
+  </div>
+
+  <div class="artist-list" id="artist-list"></div>
+  <button class="add-artist-btn" onclick="addArtist()">Adicionar Artista</button>
+
+  <!-- BOTÕES MÚLTIPLOS -->
+  <div class="action-group">
+    <button class="action-btn btn-catalog" onclick="gerarCatalogo()">
+      Baixar Catálogo PDF
+    </button>
+    <button class="action-btn btn-whatsapp" onclick="enviarWhatsApp('multi')">
+      Enviar Catálogo via WhatsApp
+    </button>
+  </div>
+</div><!-- /mode-multi -->
+
+</main>
+
+<footer>
+  <p>
+    <svg width="10" height="10" viewBox="0 0 20 20" style="vertical-align:middle;margin-right:4px"><polygon points="10,1 12.2,7.8 19,10 12.2,12.2 10,19 7.8,12.2 1,10 7.8,7.8" fill="#CCA44F"/></svg>
+    <span class="gt">Elitte Produções</span> · CNPJ 21.750.382/0001-40 · Sistema Comercial · Uso Interno
+  </p>
+  <p id="footer-date"></p>
+</footer>
+
+<!-- STICKY SUMMARY BAR (single mode only) -->
+<div class="summary-bar" id="summary-bar" style="display:none">
+  <div class="sb-item"><span class="sb-label">Comissão Líq.</span><span class="sb-val" id="sb-comliq">R$ 0</span></div>
+  <div class="sb-item"><span class="sb-label">Vendedor</span><span class="sb-val" id="sb-vend">R$ 0</span></div>
+  <div class="sb-item"><span class="sb-label">Despesas</span><span class="sb-val" id="sb-desp">R$ 0</span></div>
+  <div class="sb-item"><span class="sb-label">Lucro Elitte</span><span class="sb-val" id="sb-lucro">R$ 0</span></div>
+  <div class="sb-item"><span class="sb-label">Margem</span><span class="sb-val" id="sb-margem">0%</span></div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════
+   CONSTANTES
+══════════════════════════════════════════ */
+var ELITTE_TEL   = '(11) 99180-5177';
+var ELITTE_EMAIL = 'contato@elitteproducoes.com.br';
+var ELITTE_INSTA = '@elitteproducoes';
+var ELITTE_CNPJ  = 'CNPJ 21.750.382/0001-40';
+var ELITTE_RODAPE = 'Siga nossas redes sociais ' + ELITTE_INSTA + ' | Tel: ' + ELITTE_TEL + ' | ' + ELITTE_EMAIL;
+
+/* ══════════════════════════════════════════
+   UTILS
+══════════════════════════════════════════ */
+function R(id){ return document.getElementById(id) }
+function brl(v){ return 'R$ ' + Math.round(+v||0).toLocaleString('pt-BR') }
+function pctFmt(v){ var n=parseFloat(v||0); return (n%1===0?n.toFixed(0):n.toFixed(2)).replace('.',',')+'%' }
+function V(id){ var el=R(id); return el?parseFloat(el.value)||0:0 }
+function TX(id){ var el=R(id); return el?(el.value||'').trim():'' }
+
+function validadeTexto(){
+  var btn = document.querySelector('#val-opts .val-opt.active');
+  if(!btn) return '';
+  var dias = parseInt(btn.dataset.days||0);
+  if(!dias) return '';
+  var d = new Date();
+  d.setDate(d.getDate()+dias);
+  return 'Proposta válida até ' + d.toLocaleDateString('pt-BR') + ' (' + dias + ' dias)';
+}
+
+function tipoContratante(){ return (document.querySelector('#seg-tipo .seg-btn.active')||{}).dataset.val||'' }
+function cargoContratante(){ return (document.querySelector('#seg-cargo .seg-btn.active')||{}).dataset.val||'' }
+
+/* ══════════════════════════════════════════
+   MODE SWITCH
+══════════════════════════════════════════ */
+var currentMode = 'single';
+function setMode(m){
+  currentMode = m;
+  R('mode-single').style.display = m==='single'?'block':'none';
+  R('mode-multi').style.display  = m==='multi'?'block':'none';
+  R('btn-single').className = 'mode-btn' + (m==='single'?' active':'');
+  R('btn-multi').className  = 'mode-btn' + (m==='multi'?' active':'');
+  R('summary-bar').style.display = m==='single'?'flex':'none';
+  var lbl = R('header-mode-label');
+  if(lbl) lbl.textContent = m==='single' ? 'Single Show' : 'Múltiplos Shows';
+}
+
+/* ══════════════════════════════════════════
+   SEGMENTED CONTROLS
+══════════════════════════════════════════ */
+function setSeg(groupId, btn){
+  document.querySelectorAll('#'+groupId+' .seg-btn').forEach(function(b){ b.className='seg-btn' });
+  btn.className = 'seg-btn active';
+}
+
+/* ══════════════════════════════════════════
+   VALIDITY
+══════════════════════════════════════════ */
+function setValidity(btn){
+  document.querySelectorAll('#val-opts .val-opt').forEach(function(b){ b.className='val-opt' });
+  btn.className = 'val-opt active';
+}
+
+/* ══════════════════════════════════════════
+   EXTRA TOGGLE
+══════════════════════════════════════════ */
+function toggleExtra(){
+  var t = R('extra-toggle'), w = R('extra-wrap');
+  var open = w.classList.contains('open');
+  t.className = 'extra-toggle' + (open?'':' open');
+  w.className = 'extra-wrap' + (open?'':' open');
+}
+
+/* ══════════════════════════════════════════
+   PRODUÇÃO LOCAL TOGGLE
+══════════════════════════════════════════ */
+var plAtivo = false;
+function togglePL(){
+  plAtivo = !plAtivo;
+  R('tg-pill-pl').className = 'tg-pill'+(plAtivo?' on':'');
+  R('pl-wrap').className = 'collapse'+(plAtivo?' open':'');
+  R('pl-toggle-label').textContent = plAtivo?'Ativa':'Inativa';
+  calc();
+}
+
+/* ══════════════════════════════════════════
+   AUTO-FILL cachê ← artistico
+══════════════════════════════════════════ */
+var cacheManuallyEdited = false;
+function onArtisticoChange(val){
+  if(!cacheManuallyEdited){
+    var ci = R('cache');
+    if(ci){ ci.value=val; var cc=ci.closest('.fcard'); if(cc){var ve=cc.querySelector('.fcard-val');if(ve)ve.textContent=brl(val);} }
+  }
+}
+
+/* ══════════════════════════════════════════
+   STEPPER ENGINE (iOS/Android/Desktop safe)
+══════════════════════════════════════════ */
+function initStepper(card){
+  var id   = card.dataset.id;
+  var min  = parseFloat(card.dataset.min)||0;
+  var max  = parseFloat(card.dataset.max)||9999999;
+  var step = parseFloat(card.dataset.step)||1;
+  var type = card.dataset.type||'brl';
+  var inp  = card.querySelector('.st-input');
+  var valEl= card.querySelector('.fcard-val');
+  var btns = card.querySelectorAll('.st-btn');
+  if(!inp) return;
+
+  function clamp(v){
+    var r=Math.round(v/step)*step;
+    var dec=(step.toString().split('.')[1]||'').length;
+    return Math.min(Math.max(parseFloat(r.toFixed(dec)),min),max);
+  }
+
+  function display(v){
+    if(type==='brl') valEl.textContent=brl(v);
+    else if(type==='pct') valEl.textContent=pctFmt(v);
+    else if(type==='hours-qty') valEl.textContent=v+'h';
+    else valEl.textContent=v;
+  }
+
+  function apply(raw){
+    var v=clamp(parseFloat(raw)||0);
+    inp.value=v; display(v);
+    if(id==='artistico') onArtisticoChange(v);
+    calc();
+  }
+
+  btns.forEach(function(btn){
+    var dir=parseInt(btn.dataset.dir,10);
+    var touched=false;
+    btn.addEventListener('touchstart',function(e){e.preventDefault();touched=true;btn.classList.add('pressed');},{passive:false});
+    btn.addEventListener('touchend',function(e){e.preventDefault();btn.classList.remove('pressed');apply((parseFloat(inp.value)||0)+dir*step);setTimeout(function(){touched=false;},300);},{passive:false});
+    btn.addEventListener('click',function(){if(touched)return;apply((parseFloat(inp.value)||0)+dir*step);});
+  });
+
+  inp.addEventListener('input',function(){display(parseFloat(this.value)||0);if(id==='artistico')onArtisticoChange(parseFloat(this.value)||0);});
+  inp.addEventListener('change',function(){apply(this.value);});
+  inp.addEventListener('blur',function(){apply(this.value);});
+  inp.addEventListener('focus',function(){this.select&&this.select();});
+  display(parseFloat(inp.value)||0);
+}
+
+/* ══════════════════════════════════════════
+   MAIN CALC
+══════════════════════════════════════════ */
+function calc(){
+  var contrato = V('contrato'), artistico=V('artistico'), prodOp=V('prodOp');
+  var impArt=V('impArt')/100, impOp=V('impOp')/100;
+  var repasse=V('repasse'), plOrc=V('plOrc');
+  var dedArt=prodOp*impArt, dedOp=prodOp*impOp, opLiq=prodOp-dedArt-dedOp;
+
+  R('lv-contrato').textContent=brl(contrato);R('lv-artistico').textContent=brl(artistico);
+  R('lv-prodOp').textContent=brl(prodOp);R('lv-impArt').textContent=pctFmt(impArt*100);
+  R('lv-impOp').textContent=pctFmt(impOp*100);R('lv-repasse').textContent=brl(repasse);R('lv-plOrc').textContent=brl(plOrc);
+  R('rv-opLiq').textContent=brl(opLiq);
+  R('rv-opLiq-detail').textContent='dedução: '+brl(dedArt)+' art. + '+brl(dedOp)+' op.';
+  R('r-contrato').textContent=brl(contrato);R('r-artBruto').textContent=brl(artistico);
+  var totalRepPL=repasse+plOrc;
+  R('r-opLiq').textContent=brl(totalRepPL);
+  var saldoOp=opLiq-totalRepPL, soCard=R('r-saldo-op-card');
+  R('r-saldo-op').textContent=(saldoOp<0?'− ':'')+brl(Math.abs(saldoOp));
+  if(totalRepPL===0){soCard.className='metric m-cream';R('r-saldo-op-s').textContent='—';}
+  else if(saldoOp>0){soCard.className='metric m-green';R('r-saldo-op-s').textContent='✓ cobre tudo';}
+  else if(saldoOp===0){soCard.className='metric m-amber';R('r-saldo-op-s').textContent='= empatado';}
+  else{soCard.className='metric m-red';R('r-saldo-op-s').textContent='⚠ insuficiente';}
+
+  var cache=V('cache'),pctEl=V('pctEl')/100,impCom=V('impCom')/100,pctVend=V('pctVend')/100;
+  var comBruta=artistico*pctEl,impComV=comBruta*impCom,comLiq=comBruta-impComV;
+  var vendVal=comLiq*pctVend,elitteAV=comLiq-vendVal;
+
+  R('lv-cache').textContent=brl(cache);R('lv-pctEl').textContent=pctFmt(pctEl*100);
+  R('lv-impCom').textContent=pctFmt(impCom*100);R('lv-pctVend').textContent=pctFmt(pctVend*100);
+  R('r-comBruta').textContent=brl(comBruta);R('r-comBruta-s').textContent=pctFmt(pctEl*100)+' s/ Art.';
+  R('r-impCom').textContent='− '+brl(impComV);R('r-impCom-s').textContent=impCom>0?pctFmt(impCom*100)+' da bruta':'sem imp. NF';
+  R('r-comLiq').textContent=brl(comLiq);R('r-vendVal').textContent=brl(vendVal);
+  R('r-vendVal-s').textContent=pctVend>0?pctFmt(pctVend*100)+' da liq.':'sem vendedor';
+  R('r-elitteAposVend').textContent=brl(elitteAV);
+
+  // Alerta comissão baixa
+  var alertCom=R('alert-com-baixa');
+  if(artistico>0 && pctEl>0 && pctEl<0.08) alertCom.className='alert-inline alert-warn show';
+  else alertCom.className='alert-inline alert-warn';
+
+  // PL
+  var plIds=['plCam','plAb','plLoc','plTr','plCar','plHosp','plAlim','plLed','plBack'];
+  var plTotal=0;
+  plIds.forEach(function(id){var v=plAtivo?V(id):0;plTotal+=v;if(plAtivo)R('lv-'+id).textContent=brl(v);});
+  var plSaldo=plAtivo?(plOrc-plTotal):0;
+  R('pl-r-orc').textContent=brl(plOrc);R('pl-r-gasto').textContent=brl(plTotal);
+  R('pl-r-saldo').textContent=(plSaldo<0?'− ':'')+brl(Math.abs(plSaldo));
+  var sc=R('pl-r-saldo-card'),ib=R('pl-impacto-box');
+  if(!plAtivo||(plOrc===0&&plTotal===0)){sc.className='metric m-cream';R('pl-r-saldo-s').textContent='—';ib.style.display='none';}
+  else if(plSaldo>0){sc.className='metric m-green';R('pl-r-saldo-s').textContent='sobra → bônus Elitte';ib.style.display='block';ib.style.background='rgba(29,158,117,.08)';ib.style.borderColor='rgba(29,158,117,.28)';ib.style.color='#5DCAA5';ib.innerHTML='✦ <b>Sobram '+brl(plSaldo)+'</b> do orçamento — somados à comissão Elitte.';}
+  else if(plSaldo<0){sc.className='metric m-red';R('pl-r-saldo-s').textContent='estouro → deduz Elitte';ib.style.display='block';ib.style.background='rgba(201,64,64,.08)';ib.style.borderColor='rgba(201,64,64,.28)';ib.style.color='#E07070';ib.innerHTML='⚠ <b>Estouro de '+brl(Math.abs(plSaldo))+'</b> — deduzido da comissão Elitte.';}
+  else{sc.className='metric m-amber';R('pl-r-saldo-s').textContent='zerado exatamente';ib.style.display='none';}
+  var comLiqAjustada=comLiq+(plAtivo?plSaldo:0);
+
+  // Despesas
+  var horas=V('h'),valorHora=V('valorHora')||0,visita=V('visita'),brindes=V('brindes');
+  var prod=V('prod'),film=V('film'),foto=V('foto'),infl=V('infl'),mkt=V('mkt');
+  var opV=horas*valorHora,despI=opV+visita+brindes+prod+film+foto+infl+mkt;
+  R('lv-h').textContent=horas+'h';R('lv-valorHora').textContent=brl(valorHora);
+  R('lv-visita').textContent=brl(visita);R('lv-brindes').textContent=brl(brindes);
+  R('lv-prod').textContent=brl(prod);R('lv-film').textContent=brl(film);
+  R('lv-foto').textContent=brl(foto);R('lv-infl').textContent=brl(infl);R('lv-mkt').textContent=brl(mkt);
+
+  // Alerta despesas altas
+  var alertDesp=R('alert-desp-alta');
+  if(comLiqAjustada>0 && despI/comLiqAjustada>0.5) alertDesp.className='alert-inline alert-warn show';
+  else alertDesp.className='alert-inline alert-warn';
+
+  // Resultado
+  var saidas=vendVal+despI,lucro=comLiqAjustada-saidas;
+  var lPct=comLiqAjustada>0?(lucro/comLiqAjustada*100):0;
+
+  var artista=TX('artista');
+  R('abadge-wrap').innerHTML=artista?'<div class="abadge"><svg width="24" height="24" viewBox="0 0 20 20"><polygon points="10,1 12.2,7.8 19,10 12.2,12.2 10,19 7.8,12.2 1,10 7.8,7.8" fill="#CCA44F" opacity=".5"/></svg><div><div class="abl">Artista</div><div class="abn">'+artista+'</div></div></div>':'';
+
+  R('rf-comLiq').textContent=brl(comLiqAjustada);R('rf-vend').textContent=brl(vendVal);R('rf-di').textContent=brl(despI);
+  R('rf-pl').textContent=brl(plAtivo?plTotal:0);R('rf-pl-s').textContent=!plAtivo?'inativo':(plTotal>0?'gasto aba 03':'sem gastos');
+  R('rf-pl-card').className=(!plAtivo||plTotal===0)?'metric m-cream':'metric m-amber';
+  R('rf-vend-card').className=vendVal>0?'metric m-blue':'metric m-cream';
+  var dr=comLiqAjustada>0?despI/comLiqAjustada:0;
+  R('rf-di-card').className=despI===0?'metric m-cream':dr>0.4?'metric m-red':'metric m-amber';
+  R('rf-saidas').textContent=brl(saidas);R('rf-lucro').textContent=brl(Math.max(0,lucro));
+  R('rf-lucro-s').textContent=pctFmt(Math.max(0,lPct))+' da comissão';
+
+  // Demonstrativo
+  var rows=[
+    {l:'Valor Artístico (base da comissão)',v:artistico,neg:false},
+    {l:'Cachê do Artista',v:cache,neg:false},
+    {l:'Comissão Bruta Elitte ('+pctFmt(pctEl*100)+' s/ Val. Art.)',v:comBruta,neg:false},
+    impComV>0?{l:'Imposto NF Comissão ('+pctFmt(impCom*100)+')',v:impComV,neg:true}:null,
+    {l:'Comissão Líquida Elitte',v:comLiq,neg:false,hi:true},
+    (plAtivo&&plSaldo>0)?{l:'Saldo Produção Local (bônus)',v:plSaldo,neg:false}:null,
+    (plAtivo&&plSaldo<0)?{l:'Estouro Produção Local',v:Math.abs(plSaldo),neg:true}:null,
+    (plAtivo&&plSaldo!==0)?{l:'Comissão Elitte Ajustada (c/ PL)',v:comLiqAjustada,neg:false,hi:true}:null,
+    vendVal>0?{l:'Comissão Vendedor ('+pctFmt(pctVend*100)+')',v:vendVal,neg:true}:null,
+    {l:'Operacional ('+horas+'h × '+brl(valorHora)+'/h)',v:opV,neg:true},
+    visita>0?{l:'Gastos Visitação',v:visita,neg:true}:null,
+    brindes>0?{l:'Brindes',v:brindes,neg:true}:null,
+    prod>0?{l:'Produtor Artístico',v:prod,neg:true}:null,
+    film>0?{l:'Filmmaker',v:film,neg:true}:null,
+    foto>0?{l:'Fotógrafo',v:foto,neg:true}:null,
+    infl>0?{l:'Influenciador',v:infl,neg:true}:null,
+    mkt>0?{l:'Marketing',v:mkt,neg:true}:null,
+  ].filter(Boolean);
+  R('demo-wrap').innerHTML='<div class="demo-head">Demonstrativo Completo</div>'+rows.map(function(d){return '<div class="demo-row'+(d.hi?' hi':'')+(d.neg?' neg':'')+'"><span class="dl">'+d.l+'</span><span class="dr">'+(d.neg?'− ':'')+brl(d.v)+'</span></div>';}).join('')+'<div class="demo-tot"><span class="dl">Lucro Líquido — Elitte Produções</span><span class="dr" style="color:'+(lucro>=0?'#5DCAA5':'#E07070')+'">'+(lucro<0?'− ':'')+brl(Math.abs(lucro))+'</span></div>';
+
+  // Barras
+  var barBase=comLiqAjustada>0?comLiqAjustada:1;
+  var bars=[{l:'Operacional',v:opV,c:'#C4780A'},{l:'Equipe & Extras',v:despI-opV,c:'#9B4A20'},(plAtivo&&plSaldo<0)?{l:'Estouro PL',v:Math.abs(plSaldo),c:'#2D6BAD'}:null,{l:'Vendedor',v:vendVal,c:'#8A6820'},{l:'Lucro Elitte',v:Math.max(0,lucro),c:lucro>=0?'#1D9E75':'#C94040'}].filter(function(b){return b&&b.v>0});
+  R('bars').innerHTML=bars.map(function(b){var p=Math.min(100,Math.max(0,b.v/barBase*100));return '<div class="brow"><div class="blbl">'+b.l+'</div><div class="btrack"><div class="bfill" style="width:'+p.toFixed(1)+'%;background:'+b.c+'">'+(p>=7?pctFmt(p):'')+'</div></div><div class="bamt">'+brl(b.v)+'</div></div>';}).join('');
+
+  // Verdict + alertas motivacionais
+  var lc=R('lucro-card'),vd=R('verdict'),vtt=R('vt-title'),vtb=R('vt-body');
+  if(comLiqAjustada===0){lc.className='metric m-cream';vd.className='verdict v-amber';vtt.textContent='AGUARDANDO DADOS';vtb.textContent='Preencha o Valor Artístico e a % de comissão para ver a análise.';}
+  else if(lucro<0){lc.className='metric m-red';vd.className='verdict v-red';vtt.textContent='⚠ MARGEM NEGATIVA';vtb.innerHTML='As saídas superam a comissão em <b>'+brl(Math.abs(lucro))+'</b>. <b>Ação necessária:</b> tente aumentar a comissão Elitte ou renegociar o cachê do artista para viabilizar este show.';}
+  else if(lPct<20){lc.className='metric m-red';vd.className='verdict v-red';vtt.textContent='⚠ MARGEM CRÍTICA ('+pctFmt(lPct)+')';vtb.innerHTML='Margem muito baixa. A empresa retém apenas <b>'+pctFmt(lPct)+'</b>. <b>Sugestão:</b> considere reduzir despesas internas ou negociar uma comissão mínima de 10%.';}
+  else if(lPct<40){lc.className='metric m-amber';vd.className='verdict v-amber';vtt.textContent='MARGEM MODERADA ('+pctFmt(lPct)+')';vtb.innerHTML='A empresa retém <b>'+pctFmt(lPct)+'</b>. Viável, mas há espaço para otimizar. <b>Dica:</b> revise os custos de visitação e produção para melhorar essa margem.';}
+  else if(lPct<60){lc.className='metric m-green';vd.className='verdict v-green';vtt.textContent='✦ MARGEM SAUDÁVEL ('+pctFmt(lPct)+')';vtb.innerHTML='A empresa retém <b>'+pctFmt(lPct)+'</b>. Negócio bem estruturado e rentável. Bom trabalho!';}
+  else{lc.className='metric m-green';vd.className='verdict v-green';vtt.textContent='✦ MARGEM EXCELENTE ('+pctFmt(lPct)+')';vtb.innerHTML='A empresa retém <b>'+pctFmt(lPct)+'</b>. Resultado excepcional! Este é o padrão que a Elitte deve buscar em cada negociação.';}
+
+  // Sticky bar
+  R('sb-comliq').textContent=brl(comLiqAjustada);
+  R('sb-vend').textContent=brl(vendVal);
+  R('sb-desp').textContent=brl(despI);
+  R('sb-lucro').textContent=brl(Math.max(0,lucro));
+  R('sb-lucro').className='sb-val'+(lucro<0?' red':lPct<30?' amber':' green');
+  R('sb-margem').textContent=pctFmt(Math.max(0,lPct));
+  R('sb-margem').className='sb-val'+(lPct<20?' red':lPct<40?' amber':' green');
+}
+
+/* ══════════════════════════════════════════
+   PDF HELPERS
+══════════════════════════════════════════ */
+var PDF_STYLE='<style>'
+  +'*{box-sizing:border-box;margin:0;padding:0}'
+  +'body{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;background:#fff;color:#1a1a1a;font-size:11px;line-height:1.5}'
+  +'a{color:inherit;text-decoration:none}'
+  +'.page{max-width:720px;margin:0 auto;padding:36px 40px}'
+  +'/* HEADER */'
+  +'.pdf-header{display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:18px;margin-bottom:18px;border-bottom:2px solid #000}'
+  +'.pdf-logo{display:flex;flex-direction:column;gap:2px}'
+  +'.pdf-logo-name{font-size:22px;font-weight:900;letter-spacing:-1px;color:#1a1a1a;line-height:1}'
+  +'.pdf-logo-name span{color:#8a6820}'
+  +'.pdf-logo-sub{font-size:7.5px;letter-spacing:4px;color:#8a6820;font-weight:600;text-transform:uppercase}'
+  +'.pdf-logo-cnpj{font-size:8px;color:#888;margin-top:4px;letter-spacing:.04em}'
+  +'.pdf-header-right{text-align:right}'
+  +'.pdf-doc-title{font-size:15px;font-weight:700;color:#8a6820;letter-spacing:.02em}'
+  +'.pdf-doc-sub{font-size:9px;color:#888;margin-top:3px}'
+  +'.pdf-doc-vend{font-size:9px;color:#8a6820;font-weight:700;margin-top:6px}'
+  +'/* SECTIONS */'
+  +'h2{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#8a6820;margin:20px 0 8px;padding-bottom:4px;border-bottom:1px solid #d4b86a}'
+  +'/* TABLES */'
+  +'table{width:100%;border-collapse:collapse}'
+  +'.tbl td{padding:6px 10px;font-size:10.5px;border-bottom:1px solid #f0ede8;vertical-align:top}'
+  +'.tbl td:first-child{color:#666;width:38%}'
+  +'.tbl td:last-child{font-weight:500;color:#1a1a1a}'
+  +'.tbl tr:last-child td{border-bottom:none}'
+  +'.hi td{background:#fdf8f0;font-weight:700!important}'
+  +'.hi td:first-child{color:#7a5e20!important}'
+  +'.hi td:last-child{color:#8a6820!important}'
+  +'.neg td:last-child{color:#b03030}'
+  +'.tbl-head th{padding:6px 10px;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#8a6820;background:#fdf8f0;border-bottom:1.5px solid #d4b86a;text-align:left}'
+  +'.tbl-head th:not(:first-child){text-align:right}'
+  +'.tbl td.num{text-align:right}'
+  +'/* TOTAL ROW */'
+  +'.tot{background:#1a1a1a!important}'
+  +'.tot td{background:#1a1a1a;color:#fff!important;padding:8px 10px;font-weight:700;border:none}'
+  +'.tot td:last-child{color:#CCA44F!important;font-size:13px}'
+  +'/* BARS */'
+  +'.barwrap{margin:4px 0}'
+  +'.barrow{display:flex;align-items:center;gap:10px;margin-bottom:6px}'
+  +'.barrow .bl{width:130px;font-size:10px;color:#444;flex-shrink:0}'
+  +'.barrow .bt{flex:1;background:#eee;border-radius:2px;height:12px;overflow:hidden}'
+  +'.barrow .bf{height:100%;border-radius:2px}'
+  +'.barrow .ba{width:80px;text-align:right;font-size:10px;font-weight:600;color:#1a1a1a;flex-shrink:0}'
+  +'/* VERDICT */'
+  +'.verdict-box{padding:12px 14px;border-radius:4px;margin:10px 0;border-left:3px solid}'
+  +'.verdict-title{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:4px}'
+  +'/* VALIDITY */'
+  +'.validity-badge{display:inline-block;padding:5px 12px;border:1px solid #d4b86a;border-radius:3px;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#8a6820;margin-top:8px}'
+  +'/* FOOTER */'
+  +'.pdf-footer{margin-top:28px;padding-top:12px;border-top:1px solid #ddd;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:6px}'
+  +'.pdf-footer-left{font-size:8.5px;color:#999;line-height:1.7}'
+  +'.pdf-footer-right{font-size:8px;color:#bbb;text-align:right}'
+  +'@media print{.page{padding:20px 24px}}'
+  +'</style>';
+
+function cabecalhoPDF(titulo, subtitulo){
+  var data=new Date().toLocaleDateString('pt-BR');
+  var hora=new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+  var vend=TX('vendedor')||'—';
+  return '<div class="pdf-header">'
+    +'<div class="pdf-logo">'
+    +'<div class="pdf-logo-name">elitte<span>&#9733;</span></div>'
+    +'<div class="pdf-logo-sub">Produções</div>'
+    +'<div class="pdf-logo-cnpj">'+ELITTE_CNPJ+'</div>'
+    +'</div>'
+    +'<div class="pdf-header-right">'
+    +'<div class="pdf-doc-title">'+titulo+'</div>'
+    +'<div class="pdf-doc-sub">'+(subtitulo||'')+'</div>'
+    +'<div class="pdf-doc-sub">Gerado em '+data+' às '+hora+'</div>'
+    +'<div class="pdf-doc-vend">Vendedor: '+vend+'</div>'
+    +'</div>'
+    +'</div>';
+}
+
+function dadosEvento(interno){
+  var ev=TX('nomeEvento'),dt=TX('dataEvento'),cid=TX('cidade');
+  var tipo=tipoContratante(),cont=TX('nomeContratante'),cargo=cargoContratante();
+  var tel=TX('telefone'),email=TX('email'),aniv=TX('aniversario'),obs=TX('obs');
+  var val=validadeTexto();
+  var rows='';
+  if(ev)   rows+='<tr><td>Evento</td><td style="font-weight:700">'+ev+'</td></tr>';
+  if(dt)   rows+='<tr><td>Data(s)</td><td>'+dt+'</td></tr>';
+  if(cid)  rows+='<tr><td>Cidade</td><td>'+cid+'</td></tr>';
+  if(tipo) rows+='<tr><td>Tipo</td><td>'+tipo+'</td></tr>';
+  if(cont) rows+='<tr><td>Contratante</td><td style="font-weight:700">'+cont+(cargo?' · '+cargo:'')+'</td></tr>';
+  if(tel)  rows+='<tr><td>Telefone</td><td>'+tel+'</td></tr>';
+  if(interno && email) rows+='<tr><td>Email</td><td>'+email+'</td></tr>';
+  if(interno && aniv)  rows+='<tr><td>Aniversário</td><td>'+aniv+'</td></tr>';
+  if(obs)  rows+='<tr><td>Observações</td><td style="font-style:italic;color:#555">'+obs+'</td></tr>';
+  var validHtml='';
+  if(val) validHtml='<div class="validity-badge">'+val+'</div>';
+  return rows
+    ? '<h2>Identificação do Show</h2><table class="tbl">'+rows+'</table>'+validHtml
+    : (validHtml?'<h2>Identificação do Show</h2>'+validHtml:'');
+}
+
+function rodapePDF(){
+  return '<div class="pdf-footer">'
+    +'<div class="pdf-footer-left">'
+    +'<strong style="color:#8a6820">Elitte Produções</strong><br>'
+    +ELITTE_CNPJ+'<br>'
+    +'Tel: '+ELITTE_TEL+' &nbsp;|&nbsp; '+ELITTE_EMAIL+'<br>'
+    +'Redes sociais: '+ELITTE_INSTA
+    +'</div>'
+    +'<div class="pdf-footer-right">Documento gerado pelo<br>Sistema Comercial Elitte</div>'
+    +'</div>';
+}
+
+function abrirPDF(html){
+  var w=window.open('','_blank');
+  if(w){w.document.write(html);w.document.close();w.focus();setTimeout(function(){w.print();},600);}
+  else{var b=new Blob([html],{type:'text/html;charset=utf-8'});var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='elitte-'+new Date().toLocaleDateString('pt-BR').replace(/\//g,'-')+'.html';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(a.href);}
+}
+
+
+/* ══════════════════════════════════════════
+   RELATÓRIO INTERNO (PDF completo)
+══════════════════════════════════════════ */
+function gerarRelatorioInterno(){
+  var artista=TX('artista')||'—';
+  var rows=Array.from(R('demo-wrap').querySelectorAll('.demo-row')).map(function(row){
+    var l=(row.querySelector('.dl')||{}).textContent||'',v=(row.querySelector('.dr')||{}).textContent||'';
+    var hi=row.classList.contains('hi'),neg=row.classList.contains('neg');
+    return '<tr class="'+(hi?'hi':neg?'neg':'')+'"><td>'+l+'</td><td class="num">'+v+'</td></tr>';
+  }).join('');
+  var tot=R('demo-wrap').querySelector('.demo-tot');
+  var tL=(tot?(tot.querySelector('.dl')||{}).textContent:'Lucro')||'Lucro';
+  var tV=(tot?(tot.querySelector('.dr')||{}).textContent:'—')||'—';
+  var barsHTML='<div class="barwrap">'+Array.from(R('bars').querySelectorAll('.brow')).map(function(b){
+    var l=(b.querySelector('.blbl')||{}).textContent||'';
+    var f=b.querySelector('.bfill');var bg=f?f.style.background:'#ccc',w=f?f.style.width:'0%';
+    var a=(b.querySelector('.bamt')||{}).textContent||'';
+    return '<div class="barrow"><div class="bl">'+l+'</div><div class="bt"><div class="bf" style="width:'+w+';background:'+bg+'"></div></div><div class="ba">'+a+'</div></div>';
+  }).join('')+'</div>';
+  var vdCls=R('verdict').className,corSt=vdCls.indexOf('green')>=0?'#1a6e48':vdCls.indexOf('amber')>=0?'#8a6820':'#8a2020';
+  var bgSt=vdCls.indexOf('green')>=0?'#f0faf5':vdCls.indexOf('amber')>=0?'#fdf8f0':'#fdf0f0';
+  var html='<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><title>Relatório Interno — Elitte</title>'+PDF_STYLE+'</head><body><div class="page">'
+    +cabecalhoPDF('Relatório Interno','Uso exclusivo Elitte Produções')
+    +dadosEvento(true)
+    +'<h2>Artista / Show</h2>'
+    +'<table class="tbl">'
+    +'<tr class="hi"><td>Artista</td><td style="font-size:13px">'+artista+'</td></tr>'
+    +'<tr><td>Valor do Contrato</td><td>'+R('r-contrato').textContent+'</td></tr>'
+    +'<tr><td>Cachê do Artista</td><td>'+R('lv-cache').textContent+'</td></tr>'
+    +'</table>'
+    +'<h2>Demonstrativo Financeiro</h2>'
+    +'<table class="tbl">'+rows
+    +'<tr class="tot"><td>'+tL+'</td><td class="num" style="font-size:14px">'+tV+'</td></tr>'
+    +'</table>'
+    +'<h2>Distribuição da Comissão</h2>'+barsHTML
+    +'<h2>Análise de Margem</h2>'
+    +'<div class="verdict-box" style="background:'+bgSt+';border-color:'+corSt+'">'
+    +'<div class="verdict-title" style="color:'+corSt+'">'+R('vt-title').textContent+'</div>'
+    +'<div style="font-size:10.5px;color:#333">'+R('vt-body').innerHTML+'</div>'
+    +'</div>'
+    +rodapePDF()+'</div></body></html>';
+  abrirPDF(html);
+}
+
+/* ══════════════════════════════════════════
+   PROPOSTA ELITTE (PDF limpo, sem 02 e 04)
+══════════════════════════════════════════ */
+function gerarProposta(){
+  var artista=TX('artista')||'—';
+  var contVal=R('r-contrato').textContent;
+  var plIds=['plCam','plAb','plLoc','plTr','plCar','plHosp','plAlim','plLed','plBack'];
+  var plLabels={'plCam':'Produção de Camarim','plAb':'Abastecimento Camarim','plLoc':'Locações Montagem','plTr':'Translado Local','plCar':'Carregadores','plHosp':'Hospedagem','plAlim':'Alimentação','plLed':'Painel de Led','plBack':'Itens BackLine'};
+
+  var showRows='<tr class="hi"><td>Artista</td><td style="font-size:13px">'+artista+'</td></tr>'
+    +'<tr><td>Valor do Contrato</td><td style="font-weight:700;font-size:13px">'+contVal+'</td></tr>';
+  if(V('artistico')>0) showRows+='<tr><td>Valor Artístico</td><td>'+brl(V('artistico'))+'</td></tr>';
+  if(V('prodOp')>0)    showRows+='<tr><td>Produção Operacional</td><td>'+brl(V('prodOp'))+'</td></tr>';
+  if(V('repasse')>0)   showRows+='<tr><td>Repasse Operacional</td><td>'+brl(V('repasse'))+'</td></tr>';
+
+  var plSection='';
+  if(plAtivo){
+    var plRows='';
+    plIds.forEach(function(id){var v=V(id);if(v>0)plRows+='<tr><td>'+plLabels[id]+'</td><td>'+brl(v)+'</td></tr>';});
+    if(plRows) plSection='<h2>Produção Local</h2><table class="tbl">'+plRows+'</table>';
+  }
+
+  var html='<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><title>Proposta Elitte — '+artista+'</title>'+PDF_STYLE+'</head><body><div class="page">'
+    +cabecalhoPDF('Proposta Elitte','Proposta Comercial Confidencial')
+    +dadosEvento(false)
+    +'<h2>Artista / Show</h2>'
+    +'<table class="tbl">'+showRows+'</table>'
+    +plSection
+    +rodapePDF()+'</div></body></html>';
+  abrirPDF(html);
+}
+
+/* ══════════════════════════════════════════
+   CATÁLOGO PDF (múltiplos shows)
+══════════════════════════════════════════ */
+function gerarCatalogo(){
+  var trows='';
+  document.querySelectorAll('.artist-row').forEach(function(row,i){
+    var nome=row.querySelector('.art-name')?(row.querySelector('.art-name').value||'').trim():'';
+    if(!nome) return;
+    var bruto=parseFloat(row.querySelector('.art-bruto').value)||0;
+    var nf=parseFloat(row.querySelector('.art-nf').value)||0;
+    trows+='<tr style="background:'+(i%2===0?'#fafafa':'#fff')+'">'
+      +'<td style="font-weight:700;font-size:12px">'+nome+'</td>'
+      +'<td class="num" style="color:#8a6820;font-weight:700">'+brl(bruto)+'</td>'
+      +'<td class="num">'+brl(nf)+'</td></tr>';
+    row.querySelectorAll('.date-row').forEach(function(dr){
+      var dInput=dr.querySelector('.date-input'),dVal=dr.querySelector('.date-val-input');
+      if(!dInput||!dVal) return;
+      var dTxt=(dInput.value||'').trim(),dV=parseFloat(dVal.value)||0;
+      if(!dTxt) return;
+      var badge=getDiaSemana(dInput.dataset.dateiso||'');
+      var fds=(badge==='Sex'||badge==='Sáb');
+      trows+='<tr style="background:'+(i%2===0?'#fafafa':'#fff')+'">'
+        +'<td style="padding:3px 10px 3px 28px;font-size:10px;color:#777">'
+        +dTxt+(badge?' — <strong style="color:'+(fds?'#8a6820':'#999')+'">'+badge+(fds?' ★':' ')+'</strong>':'')
+        +'</td><td class="num" colspan="2" style="font-size:10px;font-weight:'+(fds?'700':'400')+';color:'+(fds?'#8a6820':'#555')+'">'+brl(dV)+'</td></tr>';
+    });
+  });
+  if(!trows){alert('Adicione ao menos um artista para gerar o catálogo.');return;}
+  var val=validadeTexto();
+  var html='<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><title>Catálogo Elitte</title>'+PDF_STYLE+'</head><body><div class="page">'
+    +cabecalhoPDF('Catálogo Elitte','Artistas Disponíveis')
+    +dadosEvento(false)
+    +'<h2>Artistas Disponíveis</h2>'
+    +'<table class="tbl tbl-head"><tr><th>Artista</th><th>Valor Bruto</th><th>Valor NF</th></tr>'+trows+'</table>'
+    +(val?'<p style="margin-top:12px;font-size:10px;font-weight:700;color:#8a6820;letter-spacing:.04em">'+val+'</p>':'')
+    +'<p style="margin-top:10px;font-size:9.5px;color:#888;font-style:italic">Para proposta detalhada de qualquer artista, entre em contato com nosso time de vendas.</p>'
+    +rodapePDF()+'</div></body></html>';
+  abrirPDF(html);
+}
+
+/* ══════════════════════════════════════════
+   WHATSAPP
+══════════════════════════════════════════ */
+function enviarWhatsApp(mode){
+  var vend=TX('vendedor')||'Elitte Produções';
+  var ev=TX('nomeEvento'),dt=TX('dataEvento'),cid=TX('cidade');
+  var tipo=tipoContratante(),cont=TX('nomeContratante'),cargo=cargoContratante();
+  var tel=TX('telefone').replace(/\D/g,'');
+  var val=validadeTexto();
+  var msg='';
+  if(mode==='single'){
+    var artista=TX('artista')||'—';
+    msg='✦ *PROPOSTA ELITTE PRODUÇÕES*\n━━━━━━━━━━━━━━━━━━━━\n';
+    if(ev)  msg+='📋 *Evento:* '+ev+'\n';
+    if(dt)  msg+='📅 *Data:* '+dt+'\n';
+    if(cid) msg+='📍 *Cidade:* '+cid+'\n';
+    if(cont)msg+='🏛️ *Para:* '+cont+(cargo?' ('+cargo+')':'')+'\n';
+    msg+='━━━━━━━━━━━━━━━━━━━━\n';
+    msg+='🎤 *Artista:* '+artista+'\n';
+    msg+='💰 *Valor do Contrato:* '+R('r-contrato').textContent+'\n';
+    if(V('artistico')>0) msg+='🎭 *Valor Artístico:* '+R('r-artBruto').textContent+'\n';
+    if(V('prodOp')>0) msg+='🎪 *Produção Operacional:* '+brl(V('prodOp'))+'\n';
+    if(plAtivo && V('plOrc')>0) msg+='🏗️ *Produção Local:* '+brl(V('plOrc'))+'\n';
+    if(val) msg+='⏰ *'+val+'*\n';
+    msg+='━━━━━━━━━━━━━━━━━━━━\n';
+  } else {
+    msg='✦ *CATÁLOGO ELITTE PRODUÇÕES*\n━━━━━━━━━━━━━━━━━━━━\n';
+    if(ev)  msg+='📋 *Evento:* '+ev+'\n';
+    if(dt)  msg+='📅 *Data:* '+dt+'\n';
+    if(cid) msg+='📍 *Cidade:* '+cid+'\n';
+    if(cont)msg+='🏛️ *Para:* '+cont+(cargo?' ('+cargo+')':'')+'\n';
+    msg+='━━━━━━━━━━━━━━━━━━━━\n';
+    document.querySelectorAll('.artist-row').forEach(function(row){
+      var nome=row.querySelector('.art-name')?(row.querySelector('.art-name').value||'').trim():'';
+      if(!nome) return;
+      var bruto=parseFloat(row.querySelector('.art-bruto').value)||0;
+      msg+='🎤 *'+nome+'* → '+brl(bruto)+'\n';
+      row.querySelectorAll('.date-row').forEach(function(dr){
+        var dInput=dr.querySelector('.date-input'),dVal=dr.querySelector('.date-val-input');
+        if(!dInput||!dVal) return;
+        var dTxt=(dInput.value||'').trim(),dV=parseFloat(dVal.value)||0;
+        if(dTxt&&dV>0){
+          var badge=getDiaSemana(dInput.dataset.dateiso||'');
+          var fds=(badge==='Sex'||badge==='Sáb');
+          msg+='   📅 '+dTxt+(badge?' ('+badge+')':'')+(fds?' 🌟':'')+' → '+brl(dV)+'\n';
+        }
+      });
+    });
+    if(val) msg+='⏰ *'+val+'*\n';
+    msg+='━━━━━━━━━━━━━━━━━━━━\n';
+    msg+='📩 Solicite proposta detalhada:\n';
+  }
+  msg+='👤 Vendedor: '+vend+'\n';
+  msg+='📞 '+ELITTE_TEL+'\n';
+  msg+='✉️ '+ELITTE_EMAIL+'\n';
+  msg+='📱 '+ELITTE_INSTA;
+  var url='https://wa.me/'+(tel?'55'+tel:'')+'?text='+encodeURIComponent(msg);
+  window.open(url,'_blank');
+}
+
+/* ══════════════════════════════════════════
+   MÚLTIPLOS SHOWS — artist list
+══════════════════════════════════════════ */
+var artistCount=0;
+function getDiaSemana(iso){
+  if(!iso) return '';
+  var d=new Date(iso+'T12:00:00');if(isNaN(d.getTime())) return '';
+  var dias=['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+  return dias[d.getDay()];
+}
+function getDiaBadge(iso){
+  var dia=getDiaSemana(iso);
+  if(!dia) return '';
+  var fds=(dia==='Sex'||dia==='Sáb');
+  return '<span class="date-badge '+(fds?'fds':'sem')+'">'+dia+(fds?' ⭑':'')+'</span>';
+}
+
+function addArtist(){
+  artistCount++;
+  var id='art'+artistCount;
+  var div=document.createElement('div');
+  div.className='artist-row'; div.dataset.artid=id;
+  div.innerHTML=
+    '<div class="artist-row-header">'
+      +'<span class="artist-num">'+String(artistCount).padStart(2,'0')+'</span>'
+      +'<div class="artist-row-name" style="flex:1"><input type="text" class="art-name" placeholder="Nome do Artista..." maxlength="60" autocomplete="off" autocorrect="off" style="-webkit-appearance:none" inputmode="text"></div>'
+      +'<button class="remove-btn" onclick="removeArtist(this)">×</button>'
+    +'</div>'
+    +'<div class="artist-values">'
+      +'<div class="artist-val-field"><span class="artist-val-label">Valor Bruto</span><input type="number" class="art-bruto" value="0" min="0" inputmode="numeric" placeholder="0"></div>'
+      +'<div class="artist-val-field"><span class="artist-val-label">Valor NF</span><input type="number" class="art-nf" value="0" min="0" inputmode="numeric" placeholder="0"></div>'
+    +'</div>'
+    +'<div class="dates-section">'
+      +'<div class="dates-label">Datas Disponíveis</div>'
+      +'<div class="date-rows-'+id+'"></div>'
+      +'<button class="add-date-btn" onclick="addDate(\''+id+'\')">+ Adicionar Data</button>'
+    +'</div>';
+  R('artist-list').appendChild(div);
+  renumberArtists();
+
+  // Fix input spin buttons & number inputs for iOS
+  div.querySelectorAll('input[type=number]').forEach(function(inp){
+    inp.addEventListener('focus',function(){this.select&&this.select();});
+  });
+}
+
+function removeArtist(btn){
+  btn.closest('.artist-row').remove();
+  renumberArtists();
+}
+
+function renumberArtists(){
+  document.querySelectorAll('.artist-row').forEach(function(row,i){
+    var num=row.querySelector('.artist-num');
+    if(num) num.textContent=String(i+1).padStart(2,'0')+'.';
+  });
+}
+
+function addDate(artId){
+  var container=document.querySelector('.date-rows-'+artId);
+  if(!container) return;
+  if(container.querySelectorAll('.date-row').length>=5){alert('Máximo de 5 datas por artista.');return;}
+  var dateRowId='dr'+Date.now();
+  var div=document.createElement('div');
+  div.className='date-row'; div.dataset.drid=dateRowId;
+  div.innerHTML=
+    '<input type="text" class="date-input" placeholder="Ex: 10/07/2026" maxlength="20" inputmode="text" data-dateiso="">'
+    +'<input type="number" class="date-val-input" value="0" min="0" inputmode="numeric" placeholder="Valor R$">'
+    +'<span class="date-badge sem" id="badge-'+dateRowId+'"></span>'
+    +'<button class="remove-date-btn" onclick="this.parentElement.remove()">×</button>';
+  container.appendChild(div);
+
+  var dateInput=div.querySelector('.date-input');
+  var badge=div.querySelector('.date-badge');
+  dateInput.addEventListener('input',function(){
+    // tenta parsear a data digitada
+    var raw=this.value.trim();
+    var iso=parseDataBR(raw);
+    this.dataset.dateiso=iso||'';
+    var dia=getDiaSemana(iso||'');
+    if(dia){
+      var fds=(dia==='Sex'||dia==='Sáb');
+      badge.className='date-badge '+(fds?'fds':'sem');
+      badge.textContent=dia+(fds?' ⭑':'');
+    } else {
+      badge.className='date-badge sem';badge.textContent='';
+    }
+  });
+
+  div.querySelector('.date-val-input').addEventListener('focus',function(){this.select&&this.select();});
+}
+
+function parseDataBR(s){
+  // aceita DD/MM/YYYY
+  var m=s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if(m) return m[3]+'-'+m[2].padStart(2,'0')+'-'+m[1].padStart(2,'0');
+  return '';
+}
+
+/* ══════════════════════════════════════════
+   NOVO SHOW
+══════════════════════════════════════════ */
+function novoShow(){
+  if(!confirm('Limpar todos os campos e começar um novo cálculo?')) return;
+  // Text inputs
+  ['vendedor','nomeEvento','dataEvento','cidade','nomeContratante','telefone','email','aniversario','obs','artista'].forEach(function(id){var el=R(id);if(el)el.value='';});
+  // Steppers
+  document.querySelectorAll('.st-input').forEach(function(inp){
+    var def={'h':1,'valorHora':250};
+    inp.value=def[inp.id]||0;
+    var card=inp.closest('.fcard');
+    if(card){initStepper(card);}
+  });
+  // Segs — reset to first
+  ['seg-tipo','seg-cargo'].forEach(function(gid){
+    var btns=document.querySelectorAll('#'+gid+' .seg-btn');
+    btns.forEach(function(b,i){b.className='seg-btn'+(i===0?' active':'');});
+  });
+  // Validade
+  document.querySelectorAll('#val-opts .val-opt').forEach(function(b,i){b.className='val-opt'+(i===0?' active':'');});
+  // PL
+  if(plAtivo) togglePL();
+  // Cache flag
+  cacheManuallyEdited=false;
+  // Artist list
+  R('artist-list').innerHTML=''; artistCount=0;
+  calc();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ══════════════════════════════════════════
+   INIT
+══════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded',function(){
+  // Init all steppers
+  document.querySelectorAll('.fcard').forEach(function(card){initStepper(card);});
+
+  // Mark cache as manually edited
+  var cacheCard=document.querySelector('[data-id="cache"]');
+  if(cacheCard){
+    var ci=R('cache'),cbs=cacheCard.querySelectorAll('.st-btn');
+    function me(){cacheManuallyEdited=true;}
+    ci.addEventListener('focus',me);
+    cbs.forEach(function(b){b.addEventListener('touchstart',me,{passive:true});b.addEventListener('mousedown',me);});
+  }
+
+  // Text field listeners
+  ['vendedor','nomeEvento','dataEvento','cidade','nomeContratante','telefone','email','aniversario','obs','artista'].forEach(function(id){
+    var el=R(id);if(el)el.addEventListener('input',calc);
+  });
+
+  // Textarea
+  var obs=R('obs');if(obs)obs.addEventListener('input',calc);
+
+  // Show summary bar
+  R('summary-bar').style.display='flex';
+
+  // Footer date
+  R('footer-date').textContent=new Date().toLocaleDateString('pt-BR',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+  // Add first artist placeholder in multi mode
+  addArtist();
+
+  // Initial calc
+  calc();
+});
+</script>
+</body>
+</html>
